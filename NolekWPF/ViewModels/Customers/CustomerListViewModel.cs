@@ -17,7 +17,7 @@ namespace NolekWPF.ViewModels.Customers
         public IErrorDataService _errorDataService { get; }
         public ICustomerRepository _customerRepository { get; }
         public ObservableCollection<CustomerDto> Customers { get; set; }
-        public ObservableCollection<EquipmentDto> Equipments { get; set; }
+        public ObservableCollection<EquipmentLookup> Equipments { get; set; }
         public ObservableCollection<CustomerDepartmentDto> Departments { get; set; }
 
         public CustomerListViewModel(ICustomerDataService customerDataService, IErrorDataService errorDataService, ICustomerRepository customerRepository)
@@ -26,7 +26,7 @@ namespace NolekWPF.ViewModels.Customers
             _errorDataService = errorDataService;
             _customerRepository = customerRepository;
             Customers = new ObservableCollection<CustomerDto>();
-            Equipments = new ObservableCollection<EquipmentDto>();
+            Equipments = new ObservableCollection<EquipmentLookup>();
             Departments = new ObservableCollection<CustomerDepartmentDto>();
         }
 

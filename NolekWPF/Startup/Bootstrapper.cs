@@ -59,6 +59,7 @@ namespace NolekWPF.Startup
             //Customer
             builder.RegisterType<CustomerCreateViewModel>().As<ICustomerCreateViewModel>();
             builder.RegisterType<CustomerListViewModel>().As<ICustomerListViewModel>();
+            builder.RegisterType<AddRemoveEquipmentToFromCustomerViewModel>().As<IAddRemoveEquipmentToFromCustomerViewModel>();
 
             builder.RegisterType<MainViewModel>().AsSelf();
 

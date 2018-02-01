@@ -1,4 +1,6 @@
-﻿using NolekWPF.Pages;
+﻿using NolekWPF.Pages.Equipment;
+using NolekWPF.Pages.Component;
+using NolekWPF.Pages.Customer;
 using NolekWPF.ViewModels;
 using System;
 using System.Collections;
@@ -75,10 +77,7 @@ namespace NolekWPF
             mainframe.Navigate(new AddRemoveComponentPage(_viewModel.AddRemoveComponentViewModel));
         }
 
-        private void mnu_createCust_Click(object sender, RoutedEventArgs e)
-        {
-            mainframe.Navigate(new CreateCustomerPage(_viewModel.CustomerCreateViewModel));
-        }
+        
 
         private void mnu_listCust_Click(object sender, RoutedEventArgs e)
         {
@@ -89,6 +88,11 @@ namespace NolekWPF
         {
             _viewModel.HarvestPassword += (p, args) =>
     args.Password = txtPassword.Password;
+        }
+
+        private void mnu_addRemoveEquip_Click(object sender, RoutedEventArgs e)
+        {
+            mainframe.Navigate(new AddRemoveEquipmentToFromCustomerPage(_viewModel.AddRemoveEquipmentToFromCustomerViewModel));
         }
     }
 }

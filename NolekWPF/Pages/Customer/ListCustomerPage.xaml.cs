@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NolekWPF.ViewModels.Customers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NolekWPF.UserControls.Component
+namespace NolekWPF.Pages.Customer
 {
     /// <summary>
-    /// Interaction logic for ComponentListView.xaml
+    /// Interaction logic for ListCustomerPage.xaml
     /// </summary>
-    public partial class ComponentListView : UserControl
+    public partial class ListCustomerPage : Page
     {
-        public ComponentListView()
+        public ListCustomerPage(ICustomerListViewModel viewmodel)
         {
             InitializeComponent();
+            DataContext = viewmodel;
         }
     }
 }

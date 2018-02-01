@@ -41,21 +41,21 @@ namespace NolekWPF.Model.Dto
             }
         }
 
-        private ObservableCollection<EquipmentDto> _equipmentCollection;
-        public ObservableCollection<EquipmentDto> EquipmentCollection
+        private ObservableCollection<EquipmentLookup> _equipmentCollection;
+        public ObservableCollection<EquipmentLookup> EquipmentCollection
         {
             get
             {
                 var modelCollection = new ObservableCollection<Equipment>(EquipmentsList);
-                _equipmentCollection = new ObservableCollection<EquipmentDto>();
+                _equipmentCollection = new ObservableCollection<EquipmentLookup>();
                 foreach (var item in modelCollection)
                 {//create dto objects from model objects
-                    _equipmentCollection.Add(new EquipmentDto()
+                    _equipmentCollection.Add(new EquipmentLookup()
                     {
                         EquipmentId = item.EquipmentId,
                         DateCreated = item.EquipmentDateCreated,
                         MainEquipmentNumber = item.EquipmentMainEquipmentNumber,
-                        Serialnumber = item.EquipmentSerialnumber,
+                        SerialNumber = item.EquipmentSerialnumber,
                         Status = item.EquipmentStatus,
                         TypeName = item.EquipmentType.EquipmentTypeName,
                         Category = item.EquipmentCategory.CategoryName,

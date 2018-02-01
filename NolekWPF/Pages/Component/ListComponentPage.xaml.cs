@@ -1,4 +1,4 @@
-﻿using NolekWPF.Equipment.ViewModels;
+﻿using NolekWPF.ViewModels.Component;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,35 +14,33 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NolekWPF.Pages
+namespace NolekWPF.Pages.Component
 {
     /// <summary>
-    /// Interaction logic for ListEquipmentPage.xaml
+    /// Interaction logic for ListComponentPage.xaml
     /// </summary>
-    public partial class ListEquipmentPage : Page
+    public partial class ListComponentPage : Page
     {
-        private IEquipmentListViewModel _viewmodel;
-        public ListEquipmentPage(IEquipmentListViewModel viewmodel)
+        private IComponentListViewModel _viewmodel;
+        public ListComponentPage(IComponentListViewModel viewmodel)
         {
             _viewmodel = viewmodel;
             InitializeComponent();
-            DataContext = viewmodel;
+            DataContext = _viewmodel;
         }
         private void PlaceholdersListBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
-            if (item != null && _viewmodel.CurrentUser.Role == "Secretary")
+            if (item != null)
             {
-                this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
+                this.NavigationService.Navigate(new DetailComponentPage(_viewmodel.ComponentDetailViewModel));
             }
         }
+
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(_viewmodel.CurrentUser.Role == "Secretary")
-            {
-                this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
-            }        
-        }    
-
+            
+            this.NavigationService.Navigate(new DetailComponentPage(_viewmodel.ComponentDetailViewModel));
+        }
     }
 }

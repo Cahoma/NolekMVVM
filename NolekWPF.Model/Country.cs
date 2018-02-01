@@ -17,16 +17,16 @@ namespace NolekWPF.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Country()
         {
-            this.CustomerDepartments = new HashSet<CustomerDepartment>();
             this.Noleks = new HashSet<Nolek>();
+            this.CustomerDepartments = new HashSet<CustomerDepartment>();
         }
     
         public int CountryId { get; set; }
         public string ContryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerDepartment> CustomerDepartments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nolek> Noleks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerDepartment> CustomerDepartments { get; set; }
     }
 }

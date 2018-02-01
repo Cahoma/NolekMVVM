@@ -50,6 +50,7 @@
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPersonId" Type="int" />
         </EntityType>
         <EntityType Name="CustomerEquipment">
           <Key>
@@ -132,6 +133,27 @@
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactPersonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ServiceDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="ServiceInterval" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ServiceReport">
+          <Key>
+            <PropertyRef Name="ServiceReportId" />
+          </Key>
+          <Property Name="ServiceReportId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="250" />
+          <Property Name="ComponentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServiceDate" Type="datetime" />
+          <Property Name="EquipmentId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -299,6 +321,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ServiceReport_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="ServiceReport" Type="Self.ServiceReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReport_Equipment">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+          <End Role="ServiceReport" Type="Self.ServiceReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentId" />
+            </Principal>
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="EquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReport_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="ServiceReport" Type="Self.ServiceReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="wiki_nolek_dk_dbModelStoreContainer">
           <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactPerson" EntityType="Self.ContactPerson" Schema="dbo" store:Type="Tables" />
@@ -314,6 +372,8 @@
           <EntitySet Name="Error" EntityType="Self.Error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nolek" EntityType="Self.Nolek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceReport" EntityType="Self.ServiceReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Equipment__Compo__04AFB25B" Association="Self.FK__Equipment__Compo__04AFB25B">
             <End Role="Component" EntitySet="Component" />
@@ -367,6 +427,18 @@
             <End Role="Country" EntitySet="Country" />
             <End Role="Nolek" EntitySet="Nolek" />
           </AssociationSet>
+          <AssociationSet Name="FK_ServiceReport_Customer" Association="Self.FK_ServiceReport_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="ServiceReport" EntitySet="ServiceReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReport_Equipment" Association="Self.FK_ServiceReport_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="ServiceReport" EntitySet="ServiceReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReport_Service" Association="Self.FK_ServiceReport_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="ServiceReport" EntitySet="ServiceReport" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -414,13 +486,8 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Errors" EntityType="wiki_nolek_dk_dbModel.Error" />
           <EntitySet Name="Countries" EntityType="wiki_nolek_dk_dbModel.Country" />
-          <EntitySet Name="CustomerDepartments" EntityType="wiki_nolek_dk_dbModel.CustomerDepartment" />
           <EntitySet Name="Logins" EntityType="wiki_nolek_dk_dbModel.Login" />
           <EntitySet Name="Noleks" EntityType="wiki_nolek_dk_dbModel.Nolek" />
-          <AssociationSet Name="FK_CustomerDepartment_Country" Association="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="CustomerDepartment" EntitySet="CustomerDepartments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Nolek_Country" Association="wiki_nolek_dk_dbModel.FK_Nolek_Country">
             <End Role="Country" EntitySet="Countries" />
             <End Role="Nolek" EntitySet="Noleks" />
@@ -431,16 +498,34 @@
             <End Role="Error" EntitySet="Errors" />
           </AssociationSet>
           <EntitySet Name="Customers" EntityType="wiki_nolek_dk_dbModel.Customer" />
-          <AssociationSet Name="FK_CustomerDepartment_Customer" Association="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="CustomerDepartment" EntitySet="CustomerDepartments" />
-          </AssociationSet>
           <EntitySet Name="ContactPersons" EntityType="wiki_nolek_dk_dbModel.ContactPerson" />
           <AssociationSet Name="FK_Nolek_ContactPerson" Association="wiki_nolek_dk_dbModel.FK_Nolek_ContactPerson">
             <End Role="ContactPerson" EntitySet="ContactPersons" />
             <End Role="Nolek" EntitySet="Noleks" />
           </AssociationSet>
+          <EntitySet Name="EquipmentComponents" EntityType="wiki_nolek_dk_dbModel.EquipmentComponent" />
+          <AssociationSet Name="FK__Equipment__Compo__04AFB25B" Association="wiki_nolek_dk_dbModel.FK__Equipment__Compo__04AFB25B">
+            <End Role="Component" EntitySet="Components" />
+            <End Role="EquipmentComponent" EntitySet="EquipmentComponents" />
+          </AssociationSet>
+          <EntitySet Name="CustomerDepartments" EntityType="wiki_nolek_dk_dbModel.CustomerDepartment" />
           <EntitySet Name="Equipments" EntityType="wiki_nolek_dk_dbModel.Equipment" />
+          <AssociationSet Name="FK_Equipment_ContactPerson" Association="wiki_nolek_dk_dbModel.FK_Equipment_ContactPerson">
+            <End Role="ContactPerson" EntitySet="ContactPersons" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerDepartment_Country" Association="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="CustomerDepartment" EntitySet="CustomerDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerDepartment_Customer" Association="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerDepartment" EntitySet="CustomerDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipment__Equip__05A3D694" Association="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694">
+            <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="EquipmentComponent" EntitySet="EquipmentComponents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Equipment_EquipmentCategory" Association="wiki_nolek_dk_dbModel.FK_Equipment_EquipmentCategory">
             <End Role="EquipmentCategory" EntitySet="EquipmentCategories" />
             <End Role="Equipment" EntitySet="Equipments" />
@@ -457,20 +542,21 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Equipment" EntitySet="Equipments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Equipment_ContactPerson" Association="wiki_nolek_dk_dbModel.FK_Equipment_ContactPerson">
-            <End Role="ContactPerson" EntitySet="ContactPersons" />
+          <EntitySet Name="Services" EntityType="wiki_nolek_dk_dbModel.Service" />
+          <EntitySet Name="ServiceReports" EntityType="wiki_nolek_dk_dbModel.ServiceReport" />
+          <AssociationSet Name="FK_ServiceReport_Customer" Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ServiceReport" EntitySet="ServiceReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReport_Equipment" Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Equipment">
             <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="ServiceReport" EntitySet="ServiceReports" />
           </AssociationSet>
-          <EntitySet Name="EquipmentComponents" EntityType="wiki_nolek_dk_dbModel.EquipmentComponent" />
-          <AssociationSet Name="FK__Equipment__Compo__04AFB25B" Association="wiki_nolek_dk_dbModel.FK__Equipment__Compo__04AFB25B">
-            <End Role="Component" EntitySet="Components" />
-            <End Role="EquipmentComponent" EntitySet="EquipmentComponents" />
+          <AssociationSet Name="FK_ServiceReport_Service" Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ServiceReport" EntitySet="ServiceReports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Equipment__Equip__05A3D694" Association="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694">
-            <End Role="Equipment" EntitySet="Equipments" />
-            <End Role="EquipmentComponent" EntitySet="EquipmentComponents" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Error">
           <Key>
             <PropertyRef Name="ErrorId" />
@@ -488,21 +574,8 @@
           </Key>
           <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ContryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomerDepartments" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country" FromRole="Country" ToRole="CustomerDepartment" />
           <NavigationProperty Name="Noleks" Relationship="wiki_nolek_dk_dbModel.FK_Nolek_Country" FromRole="Country" ToRole="Nolek" />
-        </EntityType>
-        <EntityType Name="CustomerDepartment">
-          <Key>
-            <PropertyRef Name="CustomerDepartmentId" />
-          </Key>
-          <Property Name="CustomerDepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerDepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="CountryId" Type="Int32" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Country" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country" FromRole="CustomerDepartment" ToRole="Country" />
-          <NavigationProperty Name="Customer" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Customer" FromRole="CustomerDepartment" ToRole="Customer" />
+          <NavigationProperty Name="CustomerDepartments" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country" FromRole="Country" ToRole="CustomerDepartment" />
         </EntityType>
         <EntityType Name="Login">
           <Key>
@@ -525,18 +598,6 @@
           <NavigationProperty Name="Country" Relationship="wiki_nolek_dk_dbModel.FK_Nolek_Country" FromRole="Nolek" ToRole="Country" />
           <NavigationProperty Name="ContactPerson" Relationship="wiki_nolek_dk_dbModel.FK_Nolek_ContactPerson" FromRole="Nolek" ToRole="ContactPerson" />
         </EntityType>
-        <Association Name="FK_CustomerDepartment_Country">
-          <End Type="wiki_nolek_dk_dbModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="wiki_nolek_dk_dbModel.CustomerDepartment" Role="CustomerDepartment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="CountryId" />
-            </Principal>
-            <Dependent Role="CustomerDepartment">
-              <PropertyRef Name="CountryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Nolek_Country">
           <End Type="wiki_nolek_dk_dbModel.Country" Role="Country" Multiplicity="1" />
           <End Type="wiki_nolek_dk_dbModel.Nolek" Role="Nolek" Multiplicity="*" />
@@ -581,19 +642,8 @@
           <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CustomerDepartments" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Customer" FromRole="Customer" ToRole="CustomerDepartment" />
           <NavigationProperty Name="Equipments" Relationship="wiki_nolek_dk_dbModel.CustomerEquipment" FromRole="Customer" ToRole="Equipment" />
+          <NavigationProperty Name="ServiceReports" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Customer" FromRole="Customer" ToRole="ServiceReport" />
         </EntityType>
-        <Association Name="FK_CustomerDepartment_Customer">
-          <End Type="wiki_nolek_dk_dbModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="wiki_nolek_dk_dbModel.CustomerDepartment" Role="CustomerDepartment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="CustomerDepartment">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ContactPerson">
           <Key>
             <PropertyRef Name="ContactPersonId" />
@@ -618,6 +668,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EquipmentComponent">
+          <Key>
+            <PropertyRef Name="EquipmentID" />
+            <PropertyRef Name="ComponentName" />
+          </Key>
+          <Property Name="ComponentID" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" />
+          <Property Name="ComponentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Component" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Compo__04AFB25B" FromRole="EquipmentComponent" ToRole="Component" />
+          <NavigationProperty Name="Equipment" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694" FromRole="EquipmentComponent" ToRole="Equipment" />
+        </EntityType>
+        <Association Name="FK__Equipment__Compo__04AFB25B">
+          <End Type="wiki_nolek_dk_dbModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.EquipmentComponent" Role="EquipmentComponent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="ComponentId" />
+            </Principal>
+            <Dependent Role="EquipmentComponent">
+              <PropertyRef Name="ComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerDepartment">
+          <Key>
+            <PropertyRef Name="CustomerDepartmentId" />
+          </Key>
+          <Property Name="CustomerDepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerDepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonId" Type="Int32" />
+          <NavigationProperty Name="Country" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Country" FromRole="CustomerDepartment" ToRole="Country" />
+          <NavigationProperty Name="Customer" Relationship="wiki_nolek_dk_dbModel.FK_CustomerDepartment_Customer" FromRole="CustomerDepartment" ToRole="Customer" />
+        </EntityType>
         <EntityType Name="Equipment">
           <Key>
             <PropertyRef Name="EquipmentId" />
@@ -632,13 +719,62 @@
           <Property Name="EquipmentStatus" Type="Boolean" Nullable="false" />
           <Property Name="EquipmentCategoryId" Type="Int32" Nullable="false" />
           <Property Name="ContactPersonId" Type="Int32" />
+          <NavigationProperty Name="ContactPerson" Relationship="wiki_nolek_dk_dbModel.FK_Equipment_ContactPerson" FromRole="Equipment" ToRole="ContactPerson" />
+          <NavigationProperty Name="EquipmentComponents" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694" FromRole="Equipment" ToRole="EquipmentComponent" />
           <NavigationProperty Name="EquipmentCategory" Relationship="wiki_nolek_dk_dbModel.FK_Equipment_EquipmentCategory" FromRole="Equipment" ToRole="EquipmentCategory" />
           <NavigationProperty Name="EquipmentConfiguration" Relationship="wiki_nolek_dk_dbModel.FK_Equipment_EquipmentConfiguration" FromRole="Equipment" ToRole="EquipmentConfiguration" />
           <NavigationProperty Name="EquipmentType" Relationship="wiki_nolek_dk_dbModel.FK_Equipment_EquipmentType" FromRole="Equipment" ToRole="EquipmentType" />
           <NavigationProperty Name="Customers" Relationship="wiki_nolek_dk_dbModel.CustomerEquipment" FromRole="Equipment" ToRole="Customer" />
-          <NavigationProperty Name="ContactPerson" Relationship="wiki_nolek_dk_dbModel.FK_Equipment_ContactPerson" FromRole="Equipment" ToRole="ContactPerson" />
-          <NavigationProperty Name="EquipmentComponents" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694" FromRole="Equipment" ToRole="EquipmentComponent" />
+          <NavigationProperty Name="ServiceReports" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Equipment" FromRole="Equipment" ToRole="ServiceReport" />
         </EntityType>
+        <Association Name="FK_Equipment_ContactPerson">
+          <End Type="wiki_nolek_dk_dbModel.ContactPerson" Role="ContactPerson" Multiplicity="0..1" />
+          <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactPerson">
+              <PropertyRef Name="ContactPersonId" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="ContactPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerDepartment_Country">
+          <End Type="wiki_nolek_dk_dbModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.CustomerDepartment" Role="CustomerDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="CustomerDepartment">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerDepartment_Customer">
+          <End Type="wiki_nolek_dk_dbModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.CustomerDepartment" Role="CustomerDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="CustomerDepartment">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipment__Equip__05A3D694">
+          <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.EquipmentComponent" Role="EquipmentComponent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentId" />
+            </Principal>
+            <Dependent Role="EquipmentComponent">
+              <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Equipment_EquipmentCategory">
           <End Type="wiki_nolek_dk_dbModel.EquipmentCategory" Role="EquipmentCategory" Multiplicity="1" />
           <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="*" />
@@ -679,54 +815,68 @@
           <End Type="wiki_nolek_dk_dbModel.Customer" Role="Customer" Multiplicity="*" />
           <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="*" />
         </Association>
-        <Association Name="FK_Equipment_ContactPerson">
-          <End Type="wiki_nolek_dk_dbModel.ContactPerson" Role="ContactPerson" Multiplicity="0..1" />
-          <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ContactPerson">
-              <PropertyRef Name="ContactPersonId" />
-            </Principal>
-            <Dependent Role="Equipment">
-              <PropertyRef Name="ContactPersonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="EquipmentComponent">
+        <EntityType Name="Service">
           <Key>
-            <PropertyRef Name="EquipmentID" />
-            <PropertyRef Name="ComponentName" />
+            <PropertyRef Name="ServiceId" />
           </Key>
-          <Property Name="ComponentID" Type="Int32" Nullable="false" />
-          <Property Name="EquipmentID" Type="Int32" Nullable="false" />
-          <Property Name="ComponentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Component" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Compo__04AFB25B" FromRole="EquipmentComponent" ToRole="Component" />
-          <NavigationProperty Name="Equipment" Relationship="wiki_nolek_dk_dbModel.FK__Equipment__Equip__05A3D694" FromRole="EquipmentComponent" ToRole="Equipment" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceInterval" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ServiceReports" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Service" FromRole="Service" ToRole="ServiceReport" />
         </EntityType>
-        <Association Name="FK__Equipment__Compo__04AFB25B">
-          <End Type="wiki_nolek_dk_dbModel.Component" Role="Component" Multiplicity="1" />
-          <End Type="wiki_nolek_dk_dbModel.EquipmentComponent" Role="EquipmentComponent" Multiplicity="*" />
+        <EntityType Name="ServiceReport">
+          <Key>
+            <PropertyRef Name="ServiceReportId" />
+          </Key>
+          <Property Name="ServiceReportId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDate" Type="DateTime" Precision="3" />
+          <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Customer" FromRole="ServiceReport" ToRole="Customer" />
+          <NavigationProperty Name="Equipment" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Equipment" FromRole="ServiceReport" ToRole="Equipment" />
+          <NavigationProperty Name="Service" Relationship="wiki_nolek_dk_dbModel.FK_ServiceReport_Service" FromRole="ServiceReport" ToRole="Service" />
+        </EntityType>
+        <Association Name="FK_ServiceReport_Customer">
+          <End Type="wiki_nolek_dk_dbModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.ServiceReport" Role="ServiceReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Component">
-              <PropertyRef Name="ComponentId" />
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
             </Principal>
-            <Dependent Role="EquipmentComponent">
-              <PropertyRef Name="ComponentID" />
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Equipment__Equip__05A3D694">
+        <Association Name="FK_ServiceReport_Equipment">
           <End Type="wiki_nolek_dk_dbModel.Equipment" Role="Equipment" Multiplicity="1" />
-          <End Type="wiki_nolek_dk_dbModel.EquipmentComponent" Role="EquipmentComponent" Multiplicity="*" />
+          <End Type="wiki_nolek_dk_dbModel.ServiceReport" Role="ServiceReport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipment">
               <PropertyRef Name="EquipmentId" />
             </Principal>
-            <Dependent Role="EquipmentComponent">
-              <PropertyRef Name="EquipmentID" />
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="EquipmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_ServiceReport_Service">
+          <End Type="wiki_nolek_dk_dbModel.Service" Role="Service" Multiplicity="1" />
+          <End Type="wiki_nolek_dk_dbModel.ServiceReport" Role="ServiceReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ServiceReport">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -787,18 +937,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CustomerDepartments">
-            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.CustomerDepartment">
-              <MappingFragment StoreEntitySet="CustomerDepartment">
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="CustomerDepartmentName" ColumnName="CustomerDepartmentName" />
-                <ScalarProperty Name="CustomerDepartmentId" ColumnName="CustomerDepartmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.Login">
               <MappingFragment StoreEntitySet="Login">
@@ -850,6 +988,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentComponents">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.EquipmentComponent">
+              <MappingFragment StoreEntitySet="EquipmentComponent">
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerDepartments">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.CustomerDepartment">
+              <MappingFragment StoreEntitySet="CustomerDepartment">
+                <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerDepartmentName" ColumnName="CustomerDepartmentName" />
+                <ScalarProperty Name="CustomerDepartmentId" ColumnName="CustomerDepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Equipments">
             <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.Equipment">
               <MappingFragment StoreEntitySet="Equipment">
@@ -874,12 +1034,26 @@
               <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="EquipmentComponents">
-            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.EquipmentComponent">
-              <MappingFragment StoreEntitySet="EquipmentComponent">
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceInterval" ColumnName="ServiceInterval" />
+                <ScalarProperty Name="ServiceDescription" ColumnName="ServiceDescription" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceReports">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.ServiceReport">
+              <MappingFragment StoreEntitySet="ServiceReport">
+                <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+                <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ServiceReportId" ColumnName="ServiceReportId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,4 @@
-﻿using NolekWPF.Equipment.ViewModels;
+﻿using NolekWPF.ViewModels.Customers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NolekWPF.Pages
+namespace NolekWPF.Pages.Customer
 {
     /// <summary>
-    /// Interaction logic for DetailEquipmentPage.xaml
+    /// Interaction logic for AddRemoveEquipmentToFromCustomerPage.xaml
     /// </summary>
-    public partial class DetailEquipmentPage : Page
+    public partial class AddRemoveEquipmentToFromCustomerPage : Page
     {
-        public DetailEquipmentPage(IEquipmentDetailViewModel viewmodel)
+        public AddRemoveEquipmentToFromCustomerPage(IAddRemoveEquipmentToFromCustomerViewModel viewmodel)
         {
             InitializeComponent();
             DataContext = viewmodel;
         }
+        
     }
 }

@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NolekWPF.ViewModels.Equipment;
 
-namespace NolekWPF.Pages
+namespace NolekWPF.Pages.Equipment
 {
     /// <summary>
     /// Interaction logic for AddRemoveComponentPage.xaml

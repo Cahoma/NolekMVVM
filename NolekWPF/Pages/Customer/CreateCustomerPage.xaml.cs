@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using NolekWPF.ViewModels.Customers;
 using System.Collections.ObjectModel;
 
-namespace NolekWPF.Pages
+namespace NolekWPF.Pages.Customer
 {
     /// <summary>
     /// Interaction logic for CreateCustomerPage.xaml

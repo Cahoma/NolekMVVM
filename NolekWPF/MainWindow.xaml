@@ -34,7 +34,10 @@
                     <MenuItem x:Name="mnu_listCust" Header="_List / Update" Click="mnu_listCust_Click"></MenuItem>
                     <MenuItem x:Name='mnu_createCust'
                     Header="_New Customer"
-                    Click='mnu_createCust_Click'></MenuItem>
+                    ></MenuItem>
+                    <MenuItem x:Name='mnu_addRemoveEquip'
+                    Header="_Add / Remove Equipment"
+                    Click='mnu_addRemoveEquip_Click'></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Service Reports">
                     <MenuItem Header="_View history"></MenuItem>

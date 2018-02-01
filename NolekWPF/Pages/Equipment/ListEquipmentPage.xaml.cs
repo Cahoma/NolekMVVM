@@ -1,4 +1,4 @@
-﻿using NolekWPF.ViewModels.Component;
+﻿using NolekWPF.Equipment.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,33 +14,35 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NolekWPF.Pages
+namespace NolekWPF.Pages.Equipment
 {
     /// <summary>
-    /// Interaction logic for ListComponentPage.xaml
+    /// Interaction logic for ListEquipmentPage.xaml
     /// </summary>
-    public partial class ListComponentPage : Page
+    public partial class ListEquipmentPage : Page
     {
-        private IComponentListViewModel _viewmodel;
-        public ListComponentPage(IComponentListViewModel viewmodel)
+        private IEquipmentListViewModel _viewmodel;
+        public ListEquipmentPage(IEquipmentListViewModel viewmodel)
         {
             _viewmodel = viewmodel;
             InitializeComponent();
-            DataContext = _viewmodel;
+            DataContext = viewmodel;
         }
         private void PlaceholdersListBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
-            if (item != null)
+            if (item != null && _viewmodel.CurrentUser.Role == "Secretary")
             {
-                this.NavigationService.Navigate(new DetailComponentPage(_viewmodel.ComponentDetailViewModel));
+                this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
             }
         }
-
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
-            this.NavigationService.Navigate(new DetailComponentPage(_viewmodel.ComponentDetailViewModel));
-        }
+            if(_viewmodel.CurrentUser.Role == "Secretary")
+            {
+                this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
+            }        
+        }    
+
     }
 }

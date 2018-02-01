@@ -105,64 +105,48 @@
     <Compile Include="Helpers\BoolToVisibleOrCollapsed.cs" />
     <Compile Include="Helpers\ConvertTextToImage.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
-    <Compile Include="Pages\AddRemoveComponentPage.xaml.cs">
+    <Compile Include="Pages\Equipment\AddRemoveComponentPage.xaml.cs">
       <DependentUpon>AddRemoveComponentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CreateComponentPage.xaml.cs">
+    <Compile Include="Pages\Customer\AddRemoveEquipmentToFromCustomerPage.xaml.cs">
+      <DependentUpon>AddRemoveEquipmentToFromCustomerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Component\CreateComponentPage.xaml.cs">
       <DependentUpon>CreateComponentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CreateCustomerPage.xaml.cs">
+    <Compile Include="Pages\Customer\CreateCustomerPage.xaml.cs">
       <DependentUpon>CreateCustomerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CreateEquipmentPage.xaml.cs">
+    <Compile Include="Pages\Equipment\CreateEquipmentPage.xaml.cs">
       <DependentUpon>CreateEquipmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DetailComponentPage.xaml.cs">
+    <Compile Include="Pages\Component\DetailComponentPage.xaml.cs">
       <DependentUpon>DetailComponentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DetailEquipmentPage.xaml.cs">
+    <Compile Include="Pages\Equipment\DetailEquipmentPage.xaml.cs">
       <DependentUpon>DetailEquipmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ListComponentPage.xaml.cs">
+    <Compile Include="Pages\Component\ListComponentPage.xaml.cs">
       <DependentUpon>ListComponentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ListCustomerPage.xaml.cs">
+    <Compile Include="Pages\Customer\ListCustomerPage.xaml.cs">
       <DependentUpon>ListCustomerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ListEquipmentPage.xaml.cs">
+    <Compile Include="Pages\Equipment\ListEquipmentPage.xaml.cs">
       <DependentUpon>ListEquipmentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Startup\Bootstrapper.cs" />
-    <Compile Include="UserControls\Component\ComponentCreateView.xaml.cs">
-      <DependentUpon>ComponentCreateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Component\ComponentDetailView.xaml.cs">
-      <DependentUpon>ComponentDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Component\ComponentListView.xaml.cs">
-      <DependentUpon>ComponentListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Equipment\EquipmentComponentView.xaml.cs">
-      <DependentUpon>EquipmentComponentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Equipment\EquipmentCreateView.xaml.cs">
-      <DependentUpon>EquipmentCreateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Equipment\EquipmentDetailView.xaml.cs">
-      <DependentUpon>EquipmentDetailView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Equipment\EquipmentListView.xaml.cs">
-      <DependentUpon>EquipmentListView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\Component\ComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentDetailViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentListViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentDetailViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentListViewModel.cs" />
+    <Compile Include="ViewModels\Customers\AddRemoveEquipmentToFromCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerCreateViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerListViewModel.cs" />
+    <Compile Include="ViewModels\Customers\IAddRemoveEquipmentToFromCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\ICustomerCreateViewModel.cs" />
     <Compile Include="ViewModels\Customers\ICustomerListViewModel.cs" />
     <Compile Include="ViewModels\Equipment\AddRemoveComponentViewModel.cs" />
@@ -190,67 +174,43 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AddRemoveComponentPage.xaml">
+    <Page Include="Pages\Equipment\AddRemoveComponentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\CreateComponentPage.xaml">
+    <Page Include="Pages\Customer\AddRemoveEquipmentToFromCustomerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CreateCustomerPage.xaml">
+    <Page Include="Pages\Component\CreateComponentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CreateEquipmentPage.xaml">
+    <Page Include="Pages\Customer\CreateCustomerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DetailComponentPage.xaml">
+    <Page Include="Pages\Equipment\CreateEquipmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DetailEquipmentPage.xaml">
+    <Page Include="Pages\Component\DetailComponentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ListComponentPage.xaml">
+    <Page Include="Pages\Equipment\DetailEquipmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ListCustomerPage.xaml">
+    <Page Include="Pages\Component\ListComponentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ListEquipmentPage.xaml">
+    <Page Include="Pages\Customer\ListCustomerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Component\ComponentCreateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Component\ComponentDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Component\ComponentListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Equipment\EquipmentComponentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Equipment\EquipmentCreateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Equipment\EquipmentDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Equipment\EquipmentListView.xaml">
+    <Page Include="Pages\Equipment\ListEquipmentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,10 +256,6 @@
       <Name>NolekWPF.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Component\" />
-    <Folder Include="Pages\Customer\" />
-    <Folder Include="Pages\Equipment\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

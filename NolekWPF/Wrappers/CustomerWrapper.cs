@@ -48,7 +48,7 @@ namespace NolekWPF.Wrappers
                 ValidateProperty(nameof(Departments));
             }
         }
-        public ObservableCollection<EquipmentDto> Equipments
+        public ObservableCollection<EquipmentLookup> Equipments
         {
             get { return Equipments; }
             set

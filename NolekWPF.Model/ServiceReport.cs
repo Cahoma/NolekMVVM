@@ -12,17 +12,19 @@ namespace NolekWPF.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerDepartment
+    public partial class ServiceReport
     {
-        public int CustomerDepartmentId { get; set; }
-        public string CustomerDepartmentName { get; set; }
+        public int ServiceReportId { get; set; }
         public int CustomerId { get; set; }
-        public int CountryId { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public Nullable<int> ContactPersonId { get; set; }
+        public string Status { get; set; }
+        public int ServiceId { get; set; }
+        public string Comment { get; set; }
+        public string ComponentName { get; set; }
+        public Nullable<System.DateTime> ServiceDate { get; set; }
+        public int EquipmentId { get; set; }
     
-        public virtual Country Country { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Equipment Equipment { get; set; }
+        public virtual Service Service { get; set; }
     }
 }

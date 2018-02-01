@@ -1,9 +1,9 @@
-﻿<Page x:Class="NolekWPF.Pages.ListEquipmentPage"
+﻿<Page x:Class="NolekWPF.Pages.Equipment.ListEquipmentPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:NolekWPF.Pages"
+      xmlns:local="clr-namespace:NolekWPF.Pages.Equipment"
       xmlns:helpers="clr-namespace:NolekWPF.Helpers"
       mc:Ignorable="d"
       d:DesignHeight="300"
@@ -56,13 +56,23 @@
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
                     <DataGridTextColumn Header="Type Name" Binding="{Binding TypeName}"/>
                     <DataGridTextColumn Header="Configuration" Binding="{Binding Configuration}"/>
+                    <!--<DataGridTextColumn Header="Date Created" Binding="{Binding DateCreated}"/>-->
+
                     <DataGridTemplateColumn Header="Date Created">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker SelectedDate="{Binding DateCreated}" BorderThickness="0" />
+                                <TextBox Text="{Binding DateCreated, StringFormat={}{0:MM/dd/yyyy}}" IsReadOnly="True"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
+                    <!--<DataGridTemplateColumn Header="Date Created">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding DateCreated}" BorderThickness="0" Focusable="False"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
                     <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
                     <DataGridTemplateColumn Header="Contact Person">
                         <DataGridTemplateColumn.CellTemplate>

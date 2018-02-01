@@ -1,0 +1,143 @@
+﻿<Page x:Class="NolekWPF.Pages.Customer.AddRemoveEquipmentToFromCustomerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NolekWPF.Pages.Customer"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="500"
+      Title="AddRemoveEquipmentToFromCustomerPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="0" CanUserReorderColumns="False"
+                SelectionMode="Single" ItemsSource="{Binding Customers}" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" SelectedItem="{Binding SelectedCustomer}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding CustomerName}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Column="1">
+            <Label Content="Departments:"></Label>
+            <DataGrid CanUserReorderColumns="False"
+                SelectionMode="Single" Margin="5 0 0 0"  ItemsSource="{Binding Departments}" AutoGenerateColumns="True" IsReadOnly="True" ColumnWidth="*">
+            </DataGrid>
+            <Label Content="Current Equipment:"></Label>
+            <DataGrid MaxHeight="400"
+                ItemsSource="{Binding CustomerEquipments}"
+                SelectedItem="{Binding SelectedEquipment, Mode=OneWay}"
+                IsReadOnly="True"
+                CanUserReorderColumns="False"
+                SelectionMode="Single"
+                ColumnWidth="*" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    
+                    <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}"/>
+                    <DataGridTextColumn Header="Main Equip. No" Binding="{Binding MainEquipmentNumber}"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Type Name" Binding="{Binding TypeName}"/>
+                    <DataGridTextColumn Header="Configuration" Binding="{Binding Configuration}"/>
+                    <DataGridTemplateColumn Header="Date Created">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding DateCreated}" BorderThickness="0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <StackPanel Orientation="Vertical">
+                <Label Content="Choose Equipment To Add:" Margin="10 0 0 0"></Label>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="210"></ColumnDefinition>
+                        <ColumnDefinition Width="75"></ColumnDefinition>
+
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="SearchBar" Padding="2" HorizontalAlignment="Left" Margin="10,0,0,10"  Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" Width="200" />
+                    <TextBlock Grid.Column="0" IsHitTestVisible="False" Text="Search by Type Name" HorizontalAlignment="Left" Margin="13,2,0,0" Foreground="DarkGray" >
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    
+                    <Button Command="{Binding AddEquipment}" Height="20" Margin="10 0 0 10" Grid.Column="1" Content="Add"></Button>
+                </Grid>
+                <DataGrid MaxHeight="800"
+                ItemsSource="{Binding Equipments}"
+                SelectedItem="{Binding SelectedEquipment, Mode=TwoWay}"
+                          
+                IsReadOnly="True"
+                CanUserReorderColumns="False"
+                SelectionMode="Single"
+                ColumnWidth="*" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Image">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Height="100" Width="100" Source="{Binding ImagePath}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}"/>
+                        <DataGridTextColumn Header="Main Equip. No" Binding="{Binding MainEquipmentNumber}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                        <DataGridTextColumn Header="Type Name" Binding="{Binding TypeName}"/>
+                        <DataGridTextColumn Header="Configuration" Binding="{Binding Configuration}"/>
+                        <DataGridTemplateColumn Header="Date Created">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding DateCreated}" BorderThickness="0" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                        <DataGridTemplateColumn Header="Contact Person">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Vertical" Grid.Column="0">
+                                            <TextBlock FontWeight="Bold" Text="First Name:"></TextBlock>
+                                            <TextBlock FontWeight="Bold" Text="Last Name:"></TextBlock>
+                                            <TextBlock FontWeight="Bold" Text="Email:"></TextBlock>
+                                            <TextBlock FontWeight="Bold" Text="Telephone:"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" Grid.Column="1">
+                                            <TextBlock Text="{Binding ContactPersonFirstName}"></TextBlock>
+
+                                            <TextBlock Text="{Binding ContactPersonLastName}"></TextBlock>
+                                            <TextBlock Text="{Binding ContactPersonEmail}"></TextBlock>
+                                            <TextBlock Text="{Binding ContactPersonTelephone}"></TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            
+        </StackPanel>
+        
+    </Grid>
+</Page>

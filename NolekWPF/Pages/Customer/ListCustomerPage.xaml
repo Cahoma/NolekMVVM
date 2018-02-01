@@ -1,9 +1,9 @@
-﻿<Page x:Class="NolekWPF.Pages.ListCustomerPage"
+﻿<Page x:Class="NolekWPF.Pages.Customer.ListCustomerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NolekWPF.Pages"
+      xmlns:local="clr-namespace:NolekWPF.Pages.Customer"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="ListCustomerPage">
@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Vertical">
-                <Label Content="Customers"></Label>
+                <Label FontWeight="Bold" Content="Customers"></Label>
                 <DataGrid ItemsSource="{Binding Customers}" IsReadOnly="True"
               CanUserReorderColumns="False" ColumnWidth="*"
               SelectionMode="Single" AutoGenerateColumns="False" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}">
@@ -41,13 +41,38 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <Label Content="Departments"></Label>
+            <StackPanel Margin="10 0 0 0" Grid.Column="1" Orientation="Vertical">
+                <Label FontWeight="Bold" Content="Departments"></Label>
                 <DataGrid ItemsSource="{Binding Departments}" ColumnWidth="*" IsReadOnly="True" CanUserAddRows="False"></DataGrid>
             </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Vertical">
-                <Label Content="Equipment"></Label>
-                <DataGrid ItemsSource="{Binding Equipments}" ColumnWidth="*" CanUserAddRows="False" IsReadOnly="True"></DataGrid>
+            <StackPanel Margin="10 0 0 0" Grid.Column="2" Orientation="Vertical">
+                <Label FontWeight="Bold" Content="Equipment"></Label>
+                <DataGrid MaxHeight="800"
+                ItemsSource="{Binding Equipments}"
+                IsReadOnly="True"
+                CanUserReorderColumns="False"
+                SelectionMode="Single"
+                ColumnWidth="*" AutoGenerateColumns="False">
+                    
+                    <DataGrid.Columns>
+                        
+                        <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}"/>
+                        <DataGridTextColumn Header="Main Equip. No" Binding="{Binding MainEquipmentNumber}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                        <DataGridTextColumn Header="Type Name" Binding="{Binding TypeName}"/>
+                        <DataGridTextColumn Header="Configuration" Binding="{Binding Configuration}"/>
+                        <DataGridTemplateColumn Header="Date Created">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding DateCreated}" BorderThickness="0" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                        
+
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </Grid>
     </StackPanel>

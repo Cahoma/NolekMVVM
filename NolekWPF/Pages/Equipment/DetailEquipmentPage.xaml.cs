@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NolekWPF.Equipment.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NolekWPF.UserControls.Equipment
+namespace NolekWPF.Pages.Equipment
 {
     /// <summary>
-    /// Interaction logic for EquipmentDetailView.xaml
+    /// Interaction logic for DetailEquipmentPage.xaml
     /// </summary>
-    public partial class EquipmentDetailView : UserControl
+    public partial class DetailEquipmentPage : Page
     {
-        public EquipmentDetailView()
+        public DetailEquipmentPage(IEquipmentDetailViewModel viewmodel)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            throw new UnauthorizedAccessException();
+            DataContext = viewmodel;
         }
     }
 }

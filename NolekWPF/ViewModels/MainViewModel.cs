@@ -37,6 +37,7 @@ namespace NolekWPF.ViewModels
         public IAddRemoveComponentViewModel AddRemoveComponentViewModel { get; }
         public ICustomerCreateViewModel CustomerCreateViewModel { get; }
         public ICustomerListViewModel CustomerListViewModel { get; }
+        public IAddRemoveEquipmentToFromCustomerViewModel AddRemoveEquipmentToFromCustomerViewModel { get; }
 
         private IUserLookupDataService _userLookupDataService;
         private IUserDataService _userDataService;
@@ -49,7 +50,8 @@ namespace NolekWPF.ViewModels
             IEquipmentDetailViewModel equipmentDetailViewModel, IComponentDetailViewModel componentDetailViewModel,
             IComponentCreateViewModel componentCreateViewModel, IComponentListViewModel componentListViewModel,
             IUserLookupDataService userLookupDataService, IEventAggregator eventAggregator, IUserDataService userDataService,
-            IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel)
+            IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel,
+            IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel)
         {
             EquipmentListViewModel = equipmentListViewModel;
             EquipmentCreateViewModel = equipmentCreateViewModel;
@@ -60,7 +62,7 @@ namespace NolekWPF.ViewModels
             AddRemoveComponentViewModel = addRemoveComponentViewModel;
             CustomerCreateViewModel = customerCreateViewModel;
             CustomerListViewModel = customerListViewModel;
-
+            AddRemoveEquipmentToFromCustomerViewModel = addRemoveEquipmentToFromCustomerViewModel;
             _eventAggregator = eventAggregator;
 
             _userLookupDataService = userLookupDataService;
@@ -81,6 +83,8 @@ namespace NolekWPF.ViewModels
             await ComponentListViewModel.LoadAsync();
             await CustomerListViewModel.LoadAsync();
             await CustomerCreateViewModel.LoadEquipment();
+            await AddRemoveEquipmentToFromCustomerViewModel.LoadAsync();
+            await AddRemoveEquipmentToFromCustomerViewModel.LoadEquipmentAsync();
 
             await EquipmentCreateViewModel.LoadTypesAsync();
             await EquipmentCreateViewModel.LoadConfigurationsAsync();
