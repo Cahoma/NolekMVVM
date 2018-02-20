@@ -18,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NolekWPF.Pages.Main;
+using NolekWPF.ViewModels.Main;
 
 namespace NolekWPF
 {
@@ -93,6 +95,11 @@ namespace NolekWPF
         private void mnu_addRemoveEquip_Click(object sender, RoutedEventArgs e)
         {
             mainframe.Navigate(new AddRemoveEquipmentToFromCustomerPage(_viewModel.AddRemoveEquipmentToFromCustomerViewModel));
+        }
+
+        private void mnuNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            mainframe.Navigate(new CreateUser(_viewModel.UserCreateViewModel));
         }
     }
 }

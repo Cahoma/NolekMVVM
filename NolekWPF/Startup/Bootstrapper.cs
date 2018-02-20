@@ -13,6 +13,7 @@ using NolekWPF.Equipment.ViewModels;
 using NolekWPF.ViewModels.Component;
 using NolekWPF.ViewModels.Customers;
 using NolekWPF.ViewModels.Equipment;
+using NolekWPF.ViewModels.Main;
 
 namespace NolekWPF.Startup
 {
@@ -42,6 +43,7 @@ namespace NolekWPF.Startup
             builder.RegisterType<ComponentRepository>().As<IComponentRepository>();
             builder.RegisterType<ErrorRepository>().As<IErrorRepository>();
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
 
             //view models
 
@@ -60,6 +62,9 @@ namespace NolekWPF.Startup
             builder.RegisterType<CustomerCreateViewModel>().As<ICustomerCreateViewModel>();
             builder.RegisterType<CustomerListViewModel>().As<ICustomerListViewModel>();
             builder.RegisterType<AddRemoveEquipmentToFromCustomerViewModel>().As<IAddRemoveEquipmentToFromCustomerViewModel>();
+
+            //User
+            builder.RegisterType<UserCreateViewModel>().As<IUserCreateViewModel>();
 
             builder.RegisterType<MainViewModel>().AsSelf();
 

@@ -14,6 +14,7 @@ using NolekWPF.ViewModels.Customers;
 using NolekWPF.ViewModels.Equipment;
 using System.Windows.Controls;
 using System;
+using NolekWPF.ViewModels.Main;
 
 namespace NolekWPF.ViewModels
 {
@@ -38,6 +39,7 @@ namespace NolekWPF.ViewModels
         public ICustomerCreateViewModel CustomerCreateViewModel { get; }
         public ICustomerListViewModel CustomerListViewModel { get; }
         public IAddRemoveEquipmentToFromCustomerViewModel AddRemoveEquipmentToFromCustomerViewModel { get; }
+        public IUserCreateViewModel UserCreateViewModel { get; }
 
         private IUserLookupDataService _userLookupDataService;
         private IUserDataService _userDataService;
@@ -51,7 +53,7 @@ namespace NolekWPF.ViewModels
             IComponentCreateViewModel componentCreateViewModel, IComponentListViewModel componentListViewModel,
             IUserLookupDataService userLookupDataService, IEventAggregator eventAggregator, IUserDataService userDataService,
             IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel,
-            IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel)
+            IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel, IUserCreateViewModel userCreateViewModel)
         {
             EquipmentListViewModel = equipmentListViewModel;
             EquipmentCreateViewModel = equipmentCreateViewModel;
@@ -63,6 +65,7 @@ namespace NolekWPF.ViewModels
             CustomerCreateViewModel = customerCreateViewModel;
             CustomerListViewModel = customerListViewModel;
             AddRemoveEquipmentToFromCustomerViewModel = addRemoveEquipmentToFromCustomerViewModel;
+            UserCreateViewModel = userCreateViewModel;
             _eventAggregator = eventAggregator;
 
             _userLookupDataService = userLookupDataService;
@@ -93,6 +96,8 @@ namespace NolekWPF.ViewModels
             await EquipmentDetailViewModel.LoadTypesAsync();
             await EquipmentDetailViewModel.LoadConfigurationsAsync();
             await EquipmentDetailViewModel.LoadCategoriesAsync();
+
+            await UserCreateViewModel.LoadAsync();
         }
 
         public class HarvestPasswordEventArgs : EventArgs
