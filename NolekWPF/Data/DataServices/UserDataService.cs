@@ -18,6 +18,14 @@ namespace NolekWPF.Data.DataServices
             _contextCreator = contextCreator;
         }
 
+        public async Task<Model.Login> GetByIdAsync(int loginid)
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Logins.AsNoTracking().SingleAsync(f => f.LoginId == loginid);
+            }
+        }
+
         public async Task<Model.Login> GetByNameAsync(string username)
         {
             using (var ctx = _contextCreator())
@@ -25,6 +33,7 @@ namespace NolekWPF.Data.DataServices
                 return await ctx.Logins.AsNoTracking().SingleAsync(f => f.Username == username);
             }
         }
+
 
         //public List<User> GetUser()
         //{

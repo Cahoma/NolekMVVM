@@ -37,9 +37,20 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <DataGrid Name="GridUsers"
-                     Padding="2" 
-                     Margin="12 0 0 0"
-                     ItemsSource="{Binding Users}">
+                      Padding="2" 
+                      Margin="12 0 0 0"
+                      ItemsSource="{Binding Users2}"
+                      SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                      SelectedIndex="{Binding SelectedListUserIndex}"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      CanUserReorderColumns="False"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="LoginId" Binding="{Binding LoginId}"/>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <StackPanel Orientation="
@@ -49,6 +60,12 @@
                     Margin="12 12 0 0"
                     Content='Create'
                     Command='{Binding CreateUserCommand}'/>
+            <Button Width="100"
+                    Height="30"
+                    Margin="12 12 0 0"
+                    Content="Delete"
+                    Command='{Binding DeleteUserCommand}'/>
         </StackPanel>
+        
     </StackPanel>
 </Page>

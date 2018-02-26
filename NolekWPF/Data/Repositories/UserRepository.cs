@@ -33,7 +33,24 @@ namespace NolekWPF.Data.Repositories
 
         public void Remove(Login model)
         {
-            _context.Logins.Remove(model); //delete equipment from the db
+
+            //if (_context.Logins.Contains(model))
+            //{
+            //    _context.Logins.Remove(model);
+            //}
+            //if (!_context.Logins.Contains(model))
+            //{
+            //    _context.Logins.Attach(model);
+            //}
+            //_context.Logins.Remove(model);
+
+            //var l = _context.Logins.FirstOrDefault(lo => lo.Username == model.Username);
+            //if (l != null)
+            //{
+            var y = _context.Logins.Where(u => u.Username.Equals(model.Username)).FirstOrDefault();
+            _context.Logins.Remove(y); //delete equipment from the db
+            //}
+
         }
 
         public async Task SaveAsync()
