@@ -36,6 +36,11 @@ namespace NolekWPF.Data.Repositories
             _context.Logins.Remove(model); //delete equipment from the db
         }
 
+        public Model.Login GetByIdAsync(int loginId)
+        {
+            return _context.Logins.Single(f => f.LoginId == loginId); //return equipement with the id
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync(); //save all changes to the current context

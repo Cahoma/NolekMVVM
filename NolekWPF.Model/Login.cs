@@ -24,6 +24,7 @@ namespace NolekWPF.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Error> Errors { get; set; }

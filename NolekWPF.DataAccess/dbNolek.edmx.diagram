@@ -36,6 +36,7 @@
         <AssociationConnector Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Customer" />
         <AssociationConnector Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Equipment" />
         <AssociationConnector Association="wiki_nolek_dk_dbModel.FK_ServiceReport_Service" />
+        <EntityTypeShape EntityType="wiki_nolek_dk_dbModel.EquipmentView" Width="1.5" PointX="11.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

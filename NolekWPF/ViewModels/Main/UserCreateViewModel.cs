@@ -15,6 +15,10 @@ using NolekWPF.ViewModels;
 using NolekWPF.Data.Repositories;
 using NolekWPF.Data.DataServices;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace NolekWPF.ViewModels.Main
 {
@@ -24,10 +28,12 @@ namespace NolekWPF.ViewModels.Main
         private IErrorDataService _errorDataService;
         private IUserLookupDataService _userLookupDataService;
         private IEventAggregator _eventAggregator;
-
+      
         private Login _newuser;
+        private Login _changeUser;
 
         public ObservableCollection<UserLookup> Users { get; }
+        public ICollectionView UserView { get; private set; }
 
         private bool _hasChanges;
 
@@ -36,8 +42,7 @@ namespace NolekWPF.ViewModels.Main
             )
         {
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnUserCreateCanExecute);
-
-            
+            UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute);
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
@@ -47,7 +52,6 @@ namespace NolekWPF.ViewModels.Main
             Users = new ObservableCollection<UserLookup>();
 
             NewUser = CreateNewUser();
-
         }
 
         public async Task RefreshList()
@@ -68,10 +72,39 @@ namespace NolekWPF.ViewModels.Main
                     //var convert = cv.Convert(Equipments[i].ImagePath);
                     i++;
                 }
+                UserView = CollectionViewSource.GetDefaultView(Users);
             }
             catch
             {
                 MessageBox.Show("What happened???");
+            }
+        }
+
+        private bool OnUserUpdateCanExecute()
+        {
+            //validate fields to disable/enable button
+            return true;
+        }
+
+        private async void OnUpdateUserExecute()
+        {
+            try
+            {               
+                await _userRepository.SaveAsync();
+                ChangeUser = UpdateUser2();
+
+                MessageBox.Show("User was successfully updated.");
+                await RefreshList();
+            }
+            catch(DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage);
+                    }
+                }
             }
         }
 
@@ -87,12 +120,13 @@ namespace NolekWPF.ViewModels.Main
             {
                 await _userRepository.SaveAsync();
                 NewUser = CreateNewUser();
+
                 MessageBox.Show("User was successfully created.");
                 await RefreshList();
             }
-            catch
+            catch(Exception e)
             {
-                MessageBox.Show("You messed up");
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -103,16 +137,37 @@ namespace NolekWPF.ViewModels.Main
 
             //default values
             //user.LoginId = 45;
-            user.Role = "";
-            user.Username = "";
-            user.Password = "";
+            user.Active = true;
 
             _userRepository.Add(user); //context is aware of the equipment to add
             
             return user;
         }
 
+        private Login UpdateUser2()
+        {
+            var user = new Login();
+
+            //_equipmentRepository.Update(equipment);
+            return user;
+        }
+
+        private Login UpdateUser(UserLookup uuser) //calls the add method in the repository to insert new equipment and return it
+        {
+            var user = new Login();
+            user.LoginId = uuser.LoginId;
+            user.Username = uuser.Username;
+            user.Password = uuser.Password;
+            user.Role = uuser.Role;
+            user.Active = uuser.Active;
+
+            _userRepository.SaveAsync(); //context is aware of the equipment to add
+            return user;
+
+        }
+
         public ICommand CreateUserCommand { get; }
+        public ICommand UpdateUserCommand { get; }
 
         public bool HasChanges //is true if changes has been made to equipment
         {
@@ -134,6 +189,31 @@ namespace NolekWPF.ViewModels.Main
             {
                 _newuser = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public Login ChangeUser
+        {
+            get { return _changeUser; }
+            set
+            {
+                _changeUser = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private UserLookup _selectedUser;
+
+        public UserLookup SelectedUser
+        {
+            get { return _selectedUser; }
+            set
+            {
+                _selectedUser = value;
+                if(_selectedUser != null)
+                {
+                    NewUser = UpdateUser(_selectedUser);
+                }             
             }
         }
     }

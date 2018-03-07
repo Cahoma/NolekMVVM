@@ -11,6 +11,7 @@ namespace NolekWPF.ViewModels.Main
     {
         ICommand CreateUserCommand { get; }
         Login NewUser { get; }
+        UserLookup SelectedUser { get; set; }
 
         ObservableCollection<UserLookup> Users { get; }
         Task LoadAsync();

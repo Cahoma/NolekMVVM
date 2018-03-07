@@ -31,6 +31,7 @@ namespace NolekWPF.Data.Repositories
         {
             return await _context.Equipments.SingleAsync(f => f.EquipmentId == equipId); //return equipement with the id
         }
+
         public async Task<IEnumerable<EquipmentTypeDto>> GetEquipmentTypesAsync()
         {
             return await _context.EquipmentTypes.Select(t => new EquipmentTypeDto()

@@ -124,6 +124,7 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Nolek">
           <Key>
@@ -164,6 +165,30 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EquipmentView">
+          <Key>
+            <PropertyRef Name="EquipmentId" />
+            <PropertyRef Name="EquipmentDateCreated" />
+            <PropertyRef Name="EquipmentSerialnumber" />
+            <PropertyRef Name="EquipmentMainEquipmentNumber" />
+            <PropertyRef Name="EquipmentStatus" />
+            <PropertyRef Name="EquipmentConfigurationDescription" />
+            <PropertyRef Name="EquipmentTypeName" />
+            <PropertyRef Name="EquipmentTypeDescription" />
+          </Key>
+          <Property Name="EquipmentId" Type="int" Nullable="false" />
+          <Property Name="EquipmentDateCreated" Type="date" Nullable="false" />
+          <Property Name="EquipmentImagePath" Type="nvarchar(max)" />
+          <Property Name="EquipmentSerialnumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EquipmentMainEquipmentNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EquipmentStatus" Type="bit" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EquipmentConfigurationDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EquipmentTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EquipmentTypeDescription" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK__Equipment__Compo__04AFB25B">
           <End Role="Component" Type="Self.Component" Multiplicity="1" />
@@ -375,6 +400,20 @@
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceReport" EntityType="Self.ServiceReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentView" EntityType="Self.EquipmentView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EquipmentView].[EquipmentId] AS [EquipmentId], 
+    [EquipmentView].[EquipmentDateCreated] AS [EquipmentDateCreated], 
+    [EquipmentView].[EquipmentImagePath] AS [EquipmentImagePath], 
+    [EquipmentView].[EquipmentSerialnumber] AS [EquipmentSerialnumber], 
+    [EquipmentView].[EquipmentMainEquipmentNumber] AS [EquipmentMainEquipmentNumber], 
+    [EquipmentView].[EquipmentStatus] AS [EquipmentStatus], 
+    [EquipmentView].[CategoryName] AS [CategoryName], 
+    [EquipmentView].[EquipmentConfigurationDescription] AS [EquipmentConfigurationDescription], 
+    [EquipmentView].[EquipmentTypeName] AS [EquipmentTypeName], 
+    [EquipmentView].[EquipmentTypeDescription] AS [EquipmentTypeDescription]
+    FROM [dbo].[EquipmentView] AS [EquipmentView]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Equipment__Compo__04AFB25B" Association="Self.FK__Equipment__Compo__04AFB25B">
             <End Role="Component" EntitySet="Component" />
             <End Role="EquipmentComponent" EntitySet="EquipmentComponent" />
@@ -556,6 +595,7 @@
             <End Role="Service" EntitySet="Services" />
             <End Role="ServiceReport" EntitySet="ServiceReports" />
           </AssociationSet>
+          <EntitySet Name="EquipmentViews" EntityType="wiki_nolek_dk_dbModel.EquipmentView" />
           </EntityContainer>
         <EntityType Name="Error">
           <Key>
@@ -586,6 +626,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Errors" Relationship="wiki_nolek_dk_dbModel.FK_Error_Login" FromRole="Login" ToRole="Error" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Nolek">
           <Key>
@@ -876,6 +917,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EquipmentView">
+          <Key>
+            <PropertyRef Name="EquipmentId" />
+            <PropertyRef Name="EquipmentDateCreated" />
+            <PropertyRef Name="EquipmentSerialnumber" />
+            <PropertyRef Name="EquipmentMainEquipmentNumber" />
+            <PropertyRef Name="EquipmentStatus" />
+            <PropertyRef Name="EquipmentConfigurationDescription" />
+            <PropertyRef Name="EquipmentTypeName" />
+            <PropertyRef Name="EquipmentTypeDescription" />
+          </Key>
+          <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentDateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EquipmentImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentSerialnumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentMainEquipmentNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentConfigurationDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentTypeDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -940,6 +1003,7 @@
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.Login">
               <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
@@ -1054,6 +1118,22 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ServiceReportId" ColumnName="ServiceReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentViews">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.EquipmentView">
+              <MappingFragment StoreEntitySet="EquipmentView">
+                <ScalarProperty Name="EquipmentTypeDescription" ColumnName="EquipmentTypeDescription" />
+                <ScalarProperty Name="EquipmentTypeName" ColumnName="EquipmentTypeName" />
+                <ScalarProperty Name="EquipmentConfigurationDescription" ColumnName="EquipmentConfigurationDescription" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="EquipmentStatus" ColumnName="EquipmentStatus" />
+                <ScalarProperty Name="EquipmentMainEquipmentNumber" ColumnName="EquipmentMainEquipmentNumber" />
+                <ScalarProperty Name="EquipmentSerialnumber" ColumnName="EquipmentSerialnumber" />
+                <ScalarProperty Name="EquipmentImagePath" ColumnName="EquipmentImagePath" />
+                <ScalarProperty Name="EquipmentDateCreated" ColumnName="EquipmentDateCreated" />
+                <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

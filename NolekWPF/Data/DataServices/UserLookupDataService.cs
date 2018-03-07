@@ -24,9 +24,11 @@ namespace NolekWPF.Data.DataServices
             {
                 return await ctx.Logins.AsNoTracking().Select(f => new UserLookup
                 {
+                    LoginId = f.LoginId,
                     Username = f.Username,
                     Password = f.Password,
-                    Role = f.Role
+                    Role = f.Role,
+                    Active = f.Active
 
                 }).ToListAsync();
             }

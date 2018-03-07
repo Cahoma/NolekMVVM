@@ -8,9 +8,52 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="CreateUser">
 
-    <StackPanel Orientation="Vertical">
-        <Label Content="Create New User"
-           FontSize="20"></Label>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal"
+                   Margin="10 0 0 0"
+                    >
+        
+            
+            <DataGrid Name="GridUsers"
+                      Padding="2" 
+                      Margin="12 0 0 0"
+                      ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      CanUserReorderColumns="False"
+                      AutoGenerateColumns="False"
+                      Background="White"
+                      BorderThickness="0"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False">
+            
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
+                    <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding LoginId}"/>
+                </DataGrid.Columns>
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Active}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+            </DataGrid>
+   
+        </StackPanel>
+
+            
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+            <Label Content="Create New User"
+           FontSize="20">
+            </Label>
+        </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
             <Label Width="150">* User Name:</Label>
@@ -35,20 +78,31 @@
                Padding="2"
                Text="{Binding NewUser.Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <DataGrid Name="GridUsers"
-                     Padding="2" 
-                     Margin="12 0 0 0"
-                     ItemsSource="{Binding Users}">
-            </DataGrid>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 0 0 12">
+            <Label Width="150">* Active:</Label>
+            <CheckBox x:Name='txtActive'
+               Width='150'
+               Padding="2"
+            IsChecked="{Binding NewUser.Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <StackPanel Orientation="
+    
+
+    <StackPanel Orientation="
                Horizontal">
             <Button Width='100'
                     Height="30"
                     Margin="12 12 0 0"
                     Content='Create'
                     Command='{Binding CreateUserCommand}'/>
+            <Button Width='100'
+                    Height="30"
+                    Margin="12 12 0 0"
+                    Content='Update'
+                    Command='{Binding UpdateUserCommand}'
+                    IsEnabled="False"
+                    />
+        </StackPanel>
         </StackPanel>
     </StackPanel>
 </Page>
