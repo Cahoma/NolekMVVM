@@ -9,6 +9,5 @@ namespace NolekWPF.Data.DataServices
         //List<User> GetUser();
         //User GetUserInstance(string username);
         Task<Login> GetByNameAsync(string username);
-        Task<Login> GetByIdAsync(int loginid);
     }
 }

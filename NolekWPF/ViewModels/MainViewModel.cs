@@ -97,9 +97,7 @@ namespace NolekWPF.ViewModels
             await EquipmentDetailViewModel.LoadConfigurationsAsync();
             await EquipmentDetailViewModel.LoadCategoriesAsync();
 
-            //await UserCreateViewModel.LoadAsync();
-            await UserCreateViewModel.LoadAsync2();
-            await UserCreateViewModel.DeleteUser();
+            await UserCreateViewModel.LoadAsync();
         }
 
         public class HarvestPasswordEventArgs : EventArgs
@@ -177,8 +175,6 @@ namespace NolekWPF.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
         private string _password;
         public string Password
         {
@@ -190,16 +186,6 @@ namespace NolekWPF.ViewModels
             }
         }
 
-        private int _loginid;
-        public int LoginId
-        {
-            get { return _loginid; }
-            set
-            {
-                _loginid = value;
-                OnPropertyChanged();
-            }
-        }
         public ICommand LoginCommand { get; }
         public ICommand LogoutCommand { get; }
 

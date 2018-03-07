@@ -24,110 +24,70 @@ namespace NolekWPF.ViewModels.Main
         private IErrorDataService _errorDataService;
         private IUserLookupDataService _userLookupDataService;
         private IEventAggregator _eventAggregator;
-        private IUserDataService _userDataService;
 
         private Login _newuser;
 
         public ObservableCollection<UserLookup> Users { get; }
-        public ObservableCollection<Login> Users2 { get; }
 
         private bool _hasChanges;
 
         public UserCreateViewModel(IUserRepository userRepository, IErrorDataService errorDataService, IUserLookupDataService userLookupDataService,
-            IEventAggregator eventAggregator, IUserDataService userDataService
+            IEventAggregator eventAggregator
             )
         {
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnUserCreateCanExecute);
-            DeleteUserCommand = new DelegateCommand(OnDeleteUserExecute, OnUserDeleteCanExecute);
+
+            
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
             _userLookupDataService = userLookupDataService;
             _eventAggregator = eventAggregator;
-            _userDataService = userDataService;
+
+            Users = new ObservableCollection<UserLookup>();
 
             NewUser = CreateNewUser();
 
-            //Users = new ObservableCollection<UserLookup>();
-            Users2 = new ObservableCollection<Login>();
-        }
-
-        private Login _selectedUser;
-
-        public Login SelectedUser
-        {
-            get { return _selectedUser; }
-            set
-            {
-                _selectedUser = value;
-                //if (_selectedUser != null && CurrentUser.Role == "Secretary")
-                //{
-                //    _eventAggregator.GetEvent<OpenEquipmentDetailViewEvent>()
-                //        .Publish(_selectedEquipment.EquipmentId);
-                //}
-            }
         }
 
         public async Task RefreshList()
         {
-            await LoadAsync2();
+            await LoadAsync();
         }
 
-        public async Task LoadAsync2()
+        public async Task LoadAsync()
         {
             try
             {
                 var lookup = await _userLookupDataService.GetUserLookupAsync();
-                Login user = new Login();
-                Users2.Clear();
+                int i = 0;
+                Users.Clear();
                 foreach (var item in lookup)
                 {
-                    user = await _userDataService.GetByIdAsync(item.LoginId);
-                    Users2.Add(user);
-
+                    Users.Add(item);
                     //var convert = cv.Convert(Equipments[i].ImagePath);
+                    i++;
                 }
             }
-            catch(Exception e)
+            catch
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("What happened???");
             }
         }
-
-        //public async Task LoadAsync()
-        //{
-        //    try
-        //    {
-        //        var lookup = await _userLookupDataService.GetUserLookupAsync();
-        //        int i = 0;
-        //        Users.Clear();
-        //        foreach (var item in lookup)
-        //        {
-        //            Users.Add(item);
-        //            //var convert = cv.Convert(Equipments[i].ImagePath);
-        //            i++;
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        MessageBox.Show("What happened???");
-        //    }
-        //}
 
         private bool OnUserCreateCanExecute()
         {
             //validate fields to disable/enable button
-            
             return true;
         }
 
         private async void OnCreateUserExecute()
         {
             try
-            {            
-                NewUser = CreateNewUser();
+            {
                 await _userRepository.SaveAsync();
-                //MessageBox.Show("User was successfully created.");
+                NewUser = CreateNewUser();
+                MessageBox.Show("User was successfully created.");
                 await RefreshList();
             }
             catch
@@ -136,66 +96,23 @@ namespace NolekWPF.ViewModels.Main
             }
         }
 
-        private bool OnUserDeleteCanExecute()
-        {
-            //validate fields to disable/enable button
-            return true;
-        }
-
-        private async void OnDeleteUserExecute()
-        {
-            try
-            {
-                //_userRepository.Remove(Users2[(int)SelectedListUserIndex]); //remove from context
-
-                await DeleteUser();
-                await _userRepository.SaveAsync();
-
-                    //SelectedListUserIndex = null;
-                await RefreshList();
-
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }
-
-
-        public async Task DeleteUser() 
-        {
-            if (_selectedUser == null)
-            {
-                return;        
-            }
-            var user = new Login();
-
-            user = await _userDataService.GetByIdAsync(_selectedUser.LoginId);
-            ((DelegateCommand)DeleteUserCommand).RaiseCanExecuteChanged();
-
-            _userRepository.Remove(user); //context is aware of the equipment to add
-
-        }
-
         private Login CreateNewUser() //calls the add method in the repository to insert new equipment and return it
         {           
-            Login user = new Login();
+            var user = new Login();
             ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
 
             //default values
             //user.LoginId = 45;
             user.Role = "";
-            user.Password = "";
             user.Username = "";
-
+            user.Password = "";
 
             _userRepository.Add(user); //context is aware of the equipment to add
-
+            
             return user;
         }
 
         public ICommand CreateUserCommand { get; }
-        public ICommand DeleteUserCommand { get; }
 
         public bool HasChanges //is true if changes has been made to equipment
         {
@@ -219,6 +136,5 @@ namespace NolekWPF.ViewModels.Main
                 OnPropertyChanged();
             }
         }
-
     }
 }
