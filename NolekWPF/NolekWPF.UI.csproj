@@ -94,8 +94,6 @@
     <Compile Include="Data\Repositories\ICustomerRepository.cs" />
     <Compile Include="Data\Repositories\IEquipmentRepository.cs" />
     <Compile Include="Data\Repositories\IErrorRepository.cs" />
-    <Compile Include="Data\Repositories\IUserRepository.cs" />
-    <Compile Include="Data\Repositories\UserRepository.cs" />
     <Compile Include="Events\AfterCustomerCreated.cs" />
     <Compile Include="Events\AfterEquipmentCreated.cs" />
     <Compile Include="Events\AfterUserLogin.cs" />
@@ -137,9 +135,6 @@
     <Compile Include="Pages\Equipment\ListEquipmentPage.xaml.cs">
       <DependentUpon>ListEquipmentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Main\CreateUser.xaml.cs">
-      <DependentUpon>CreateUser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModels\Component\ComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentDetailViewModel.cs" />
@@ -163,8 +158,6 @@
     <Compile Include="ViewModels\Equipment\IEquipmentDetailViewModel.cs" />
     <Compile Include="ViewModels\Equipment\IEquipmentListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Main\IUserCreateViewModel.cs" />
-    <Compile Include="ViewModels\Main\UserCreateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Wrappers\ComponentWrapper.cs" />
     <Compile Include="Wrappers\CustomerWrapper.cs" />
@@ -221,10 +214,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Main\CreateUser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -244,9 +233,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\NolekWPF.Model.Equipment.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

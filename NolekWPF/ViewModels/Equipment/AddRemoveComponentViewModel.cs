@@ -194,7 +194,7 @@ namespace NolekWPF.ViewModels.Equipment
             }
         }
 
-        private void LoadComponentForEquipment(int equipmentId)
+        private async void LoadComponentForEquipment(int equipmentId)
         {
             var equipmentComponents = _equipmentRepository.GetEquipmentComponents(SelectedEquipment.EquipmentId);
             EquipmentComponents.Clear();

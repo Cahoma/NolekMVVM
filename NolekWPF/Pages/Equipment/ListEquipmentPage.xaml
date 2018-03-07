@@ -61,7 +61,7 @@
                     <DataGridTemplateColumn Header="Date Created">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding DateCreated, StringFormat={}{0:dd/MM/yyyy}}" IsReadOnly="True"/>
+                                <TextBox Text="{Binding DateCreated, StringFormat={}{0:MM/dd/yyyy}}" IsReadOnly="True"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
