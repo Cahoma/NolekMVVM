@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="NolekWPF.exe" version="1.0.0.2" publicKeyToken="8fb91697eb973c43" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="NolekWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="NolekWPF.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Autofac.dll" size="218112">
+      <assemblyIdentity name="Autofac" version="4.6.2.0" publicKeyToken="17863AF14B0044DA" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>1A5ccpTuOXD4nHGsVwOEL5aErEHO91nkh5KFCO6Wf1Y=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EntityFramework.dll" size="5196496">
+      <assemblyIdentity name="EntityFramework" version="6.0.0.0" publicKeyToken="B77A5C561934E089" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>7W69dJBS+QGPZplnGuVGmt7fCGz4sb1CVrvpxOf2/wU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EntityFramework.SqlServer.dll" size="621264">
+      <assemblyIdentity name="EntityFramework.SqlServer" version="6.0.0.0" publicKeyToken="B77A5C561934E089" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>ob9snjgg6D9D6fIN19mwozYqkxRvCv4LEzAYXi1RsMs=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NolekWPF.exe" size="158144">
+      <assemblyIdentity name="NolekWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>yphmjYqmej2JuHhkjzPVeIhXpk0FQJoDwKQxsERw46E=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NolekWPF.DataAccess.dll" size="71680">
+      <assemblyIdentity name="NolekWPF.DataAccess" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>H0DsFKEfIR3K7EQK0gyt8Chu/uG72z75I6zbANn51BM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="NolekWPF.Model.dll" size="30208">
+      <assemblyIdentity name="NolekWPF.Model" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>vLDcafgTC5WxzPr3NL/zaPgl3FJX1RLsvWrhKAThfko=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Prism.dll" size="31744">
+      <assemblyIdentity name="Prism" version="6.3.0.0" publicKeyToken="40EE6C3A2184DC59" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>C2H3uS5LC56Sj1P7w+4dGzd/EnLuQ8fZfuTCKaVHrRA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="NolekWPF.exe.config" size="1360">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>o+FN5gaMvs4VZh4xFlduzwbcJpI1OalSn/fqW/Q6nyU=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=Casper-PC\Casper" issuerKeyHash="ff7757587af18708696a5aa24ae163d042b32414" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>OqK1iP7omCwnoRZ0ORqb4+qL+jTXWhwZpye+rSc+huk=</DigestValue></Reference></SignedInfo><SignatureValue>0kJFE2MF2ANaAS7n+zwZCHYf0+VriCJ6Vy+KNYPi91GFczgwrUx8lmldsTZlKgNcpA55qloJOoaTPOMwIPjM8ysF5jtP+HSKOs9aL9KKBTXglAhsPCN0Fj2VcTtbdTUA8CuIIY5HrHrVM5LjYjVFWIuWwYcpFBO9rKCdgI95o1I=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>7/TMHwD6V7TnqEpDeDiS4GXF+fWB1KGm5UDwmyf8DldgqRgMm++QlH22drB4iGTjZCVw44UWgru87DVulm9KZDYQvtIBCoaCNV3e80PJUovb7GNcJuwcu25QwZIPu4X7uLDjTCtnBfYzphQeVObhrYrwMulWAZjul928BPVRJw0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="e9863e27adbe27a7191c5ad734fa8beae39b1a397416a1272c98e8fe88b5a23a" Description="" Url=""><as:assemblyIdentity name="NolekWPF.exe" version="1.0.0.2" publicKeyToken="8fb91697eb973c43" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=Casper-PC\Casper</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>JapSP2pYnGOeuPlbrw3a0WMHc+998OQfmSinyVApxUw=</DigestValue></Reference></SignedInfo><SignatureValue>VSf3TyWVyS9jP0KLWYcBP0a1TDLs6ZS+FpITrmwKojo1GwRYEJ0qaME4hiMzYg0hA9C5axvgk6d6zAgbGjS0nL1N6jkj//ynS2D3xPcKG274eOb2GsxbzKK8If89DUdLTJc2wiV80uKCtwhdSEONBb2wS9h9dmconTlDIvYehMU=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>7/TMHwD6V7TnqEpDeDiS4GXF+fWB1KGm5UDwmyf8DldgqRgMm++QlH22drB4iGTjZCVw44UWgru87DVulm9KZDYQvtIBCoaCNV3e80PJUovb7GNcJuwcu25QwZIPu4X7uLDjTCtnBfYzphQeVObhrYrwMulWAZjul928BPVRJw0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQP0Pm6wfdYZJABzoQ6jAaSTANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAAQwBhAHMAcABlAHIALQBQAEMAXABDAGEAcwBwAGUAcjAeFw0xODAzMDcyMDQ5MzFaFw0xOTAzMDgwMjQ5MzFaMCsxKTAnBgNVBAMeIABDAGEAcwBwAGUAcgAtAFAAQwBcAEMAYQBzAHAAZQByMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDv9MwfAPpXtOeoSkN4OJLgZcX59YHUoablQPCbJ/wOV2CpGAyb75CUfbZ2sHiIZONkJXDjhRaCu7zsNW6Wb0pkNhC+0gEKhoI1Xd7zQ8lSi9vsY1wm7By7blDBkg+7hfu4sONMK2cF9jOmFB5U5uGtivAy6VYBmO6X3bwE9VEnDQIDAQABMA0GCSqGSIb3DQEBCwUAA4GBALB5bU8Cdu2GTEnd8XLYS9eOV0xE+E/SuUorzzaw/8dWp7TPCs8IUvWTgvbpz87TDWdu/VMfBxQ507i8GCfyAI2F/iMSJobPeRKJhH2rV7BikNCz5tCk8NVAqrHzTmazL/Rz3Ah6r6zIjUVeQPqFW0m7AatkW3sfGOR5E/OCLLk9</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

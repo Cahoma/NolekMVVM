@@ -10,13 +10,10 @@
 
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Horizontal"
-                   Margin="10 0 0 0"
-                    >
-        
-            
+                   Margin="10 0 0 0">
             <DataGrid Name="GridUsers"
                       Padding="2" 
-                      Margin="12 0 0 0"
+                      Margin="12 40 0 0"
                       ItemsSource="{Binding Users}"
                       SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
                       IsReadOnly="True"
@@ -27,7 +24,6 @@
                       BorderThickness="0"
                       CanUserResizeColumns="False"
                       CanUserResizeRows="False">
-            
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                     <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
@@ -73,11 +69,11 @@
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
             <Label Width="150">* Role:</Label>
-            <TextBox x:Name='txtRole'
-               Width='150'
-               Padding="2"
-               Text="{Binding NewUser.Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+                <TextBox x:Name='txtRole'
+                Width='150'
+                Padding="2"
+                Text="{Binding NewUser.Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
             <Label Width="150">* Active:</Label>
@@ -100,7 +96,6 @@
                     Margin="12 12 0 0"
                     Content='Update'
                     Command='{Binding UpdateUserCommand}'
-                    IsEnabled="False"
                     />
         </StackPanel>
         </StackPanel>

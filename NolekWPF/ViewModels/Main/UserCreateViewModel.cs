@@ -42,7 +42,7 @@ namespace NolekWPF.ViewModels.Main
             )
         {
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnUserCreateCanExecute);
-            UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute);
+            UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute, OnUserUpdateCanExecute);
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
@@ -83,7 +83,14 @@ namespace NolekWPF.ViewModels.Main
         private bool OnUserUpdateCanExecute()
         {
             //validate fields to disable/enable button
-            return true;
+            if(ChangeUser != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private async void OnUpdateUserExecute()
@@ -110,8 +117,14 @@ namespace NolekWPF.ViewModels.Main
 
         private bool OnUserCreateCanExecute()
         {
-            //validate fields to disable/enable button
-            return true;
+            if(NewUser != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private async void OnCreateUserExecute()
@@ -136,7 +149,6 @@ namespace NolekWPF.ViewModels.Main
             ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
 
             //default values
-            //user.LoginId = 45;
             user.Active = true;
 
             _userRepository.Add(user); //context is aware of the equipment to add
@@ -147,12 +159,18 @@ namespace NolekWPF.ViewModels.Main
         private Login UpdateUser2()
         {
             var user = new Login();
+            user.Username = ChangeUser.Username;
+            user.Password = ChangeUser.Password;
+            user.Role = ChangeUser.Role;
+            user.Active = ChangeUser.Active;
+            user.LoginId = ChangeUser.LoginId;
+            ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
 
             //_equipmentRepository.Update(equipment);
             return user;
         }
 
-        private Login UpdateUser(UserLookup uuser) //calls the add method in the repository to insert new equipment and return it
+        private Login ToUpdateUser(UserLookup uuser) //calls the add method in the repository to insert new equipment and return it
         {
             var user = new Login();
             user.LoginId = uuser.LoginId;
@@ -161,7 +179,9 @@ namespace NolekWPF.ViewModels.Main
             user.Role = uuser.Role;
             user.Active = uuser.Active;
 
-            _userRepository.SaveAsync(); //context is aware of the equipment to add
+            ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
+
+            //_userRepository.SaveAsync(); //context is aware of the equipment to add
             return user;
 
         }
@@ -212,7 +232,8 @@ namespace NolekWPF.ViewModels.Main
                 _selectedUser = value;
                 if(_selectedUser != null)
                 {
-                    NewUser = UpdateUser(_selectedUser);
+                    ChangeUser = ToUpdateUser(_selectedUser);
+                    NewUser = ToUpdateUser(_selectedUser);
                 }             
             }
         }

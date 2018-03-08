@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+  </configSections>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1"/>
+  </startup>
+  <connectionStrings>
+    <add name="wiki_nolek_dk_dbEntities" connectionString="metadata=res://*/dbNolek.csdl|res://*/dbNolek.ssdl|res://*/dbNolek.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=mssql4.unoeuro.com;initial catalog=wiki_nolek_dk_db;persist security info=True;user id=wiki_nolek_dk;password=3bcztmdy;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>
+  </connectionStrings>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework"/>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer"/>
+    </providers>
+  </entityFramework>
+</configuration>

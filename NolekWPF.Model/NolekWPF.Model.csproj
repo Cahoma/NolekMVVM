@@ -70,6 +70,7 @@
     <Compile Include="Dto\EquipmentComponentDto.cs" />
     <Compile Include="Dto\EquipmentConfigurationDto.cs" />
     <Compile Include="Dto\EquipmentDto.cs" />
+    <Compile Include="Dto\LoginRoleDto.cs" />
     <Compile Include="Equipment.cs">
       <DependentUpon>dbNolek.tt</DependentUpon>
     </Compile>

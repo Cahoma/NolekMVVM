@@ -10,7 +10,9 @@ namespace NolekWPF.ViewModels.Main
     public interface IUserCreateViewModel
     {
         ICommand CreateUserCommand { get; }
+        ICommand UpdateUserCommand { get; }
         Login NewUser { get; }
+        Login ChangeUser { get; }
         UserLookup SelectedUser { get; set; }
 
         ObservableCollection<UserLookup> Users { get; }
