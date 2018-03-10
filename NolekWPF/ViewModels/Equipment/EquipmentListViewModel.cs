@@ -139,7 +139,7 @@ namespace NolekWPF.Equipment.ViewModels
             set
             {
                 _selectedEquipment = value;
-                if (_selectedEquipment != null && CurrentUser.Role == "Secretary")
+                if (_selectedEquipment != null && CurrentUser.RoleId == 3)
                 {
                     _eventAggregator.GetEvent<OpenEquipmentDetailViewEvent>()
                         .Publish(_selectedEquipment.EquipmentId);

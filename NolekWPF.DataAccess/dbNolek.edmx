@@ -123,8 +123,15 @@
           <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Role" Type="nvarchar" MaxLength="50" />
           <Property Name="Active" Type="bit" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="LoginRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Nolek">
           <Key>
@@ -211,6 +218,18 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             </Principal>
             <Dependent Role="EquipmentComponent">
               <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Login__RoleId__0B27A5C0">
+          <End Role="LoginRole" Type="Self.LoginRole" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,6 +401,130 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CfromE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentComponentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ComponentNametoID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CreateComponentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <Parameter Name="ComponentName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ComponentDescription" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="NolekOrderNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="NolekSerialNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="ComponentQty" Type="int" Mode="In" />
+          <Parameter Name="ComponentSupplyNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CreateEquipmentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="date" Mode="In" />
+          <Parameter Name="EquipmentSN" Type="nvarchar" Mode="In" />
+          <Parameter Name="EquipmentCID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentTypeID" Type="int" Mode="In" />
+          <Parameter Name="MainEquipmentNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="DepartmentID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentStatus" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="CtoE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteComponentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteEquipmentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ServiceRapportID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRapport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRapport2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRapport3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetTechName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ServiceRapportID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetWork" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ServiceRapportID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ReadComponent2SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ReadComponentSimpleSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReadComponentSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReadEquipment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReadEquipmentSimpleSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReadEquipmentSuperSimple" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ReadEquipmentTypeDesignationSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentTypeDesignation" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReadImagePath" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ServiceTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateImagePath" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentImagePath" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UpdComponent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <Parameter Name="ComponentName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ComponentDescription" Type="nvarchar" Mode="In" />
+          <Parameter Name="NolekOrderNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="NolekSerialNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="ComponentQty" Type="int" Mode="In" />
+          <Parameter Name="ComponentSupplyNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdEquipment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EquipmentID" Type="int" Mode="In" />
+          <Parameter Name="DateOfCreation" Type="date" Mode="In" />
+          <Parameter Name="EquipmentSerialNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="EquipmentConfigurationID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentTypeID" Type="int" Mode="In" />
+          <Parameter Name="MainEquipmentNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="NolekDepartmentID" Type="int" Mode="In" />
+          <Parameter Name="EquipmentStatus" Type="bit" Mode="In" />
+        </Function>
         <EntityContainer Name="wiki_nolek_dk_dbModelStoreContainer">
           <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactPerson" EntityType="Self.ContactPerson" Schema="dbo" store:Type="Tables" />
@@ -396,6 +539,7 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Error" EntityType="Self.Error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginRole" EntityType="Self.LoginRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nolek" EntityType="Self.Nolek" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceReport" EntityType="Self.ServiceReport" Schema="dbo" store:Type="Tables" />
@@ -421,6 +565,10 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <AssociationSet Name="FK__Equipment__Equip__05A3D694" Association="Self.FK__Equipment__Equip__05A3D694">
             <End Role="Equipment" EntitySet="Equipment" />
             <End Role="EquipmentComponent" EntitySet="EquipmentComponent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Login__RoleId__0B27A5C0" Association="Self.FK__Login__RoleId__0B27A5C0">
+            <End Role="LoginRole" EntitySet="LoginRole" />
+            <End Role="Login" EntitySet="Login" />
           </AssociationSet>
           <AssociationSet Name="FK_CustomerDepartment_Country" Association="Self.FK_CustomerDepartment_Country">
             <End Role="Country" EntitySet="Country" />
@@ -596,6 +744,134 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <End Role="ServiceReport" EntitySet="ServiceReports" />
           </AssociationSet>
           <EntitySet Name="EquipmentViews" EntityType="wiki_nolek_dk_dbModel.EquipmentView" />
+          <EntitySet Name="LoginRoles" EntityType="wiki_nolek_dk_dbModel.LoginRole" />
+          <AssociationSet Name="FK__Login__RoleId__0B27A5C0" Association="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0">
+            <End Role="LoginRole" EntitySet="LoginRoles" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <FunctionImport Name="CfromE">
+            <Parameter Name="EquipmentComponentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ComponentNametoID">
+            <Parameter Name="ComponentName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateComponentSP">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+            <Parameter Name="ComponentName" Mode="In" Type="String" />
+            <Parameter Name="ComponentDescription" Mode="In" Type="String" />
+            <Parameter Name="NolekOrderNumber" Mode="In" Type="String" />
+            <Parameter Name="NolekSerialNumber" Mode="In" Type="String" />
+            <Parameter Name="ComponentQty" Mode="In" Type="Int32" />
+            <Parameter Name="ComponentSupplyNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CreateEquipmentSP">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+            <Parameter Name="EquipmentSN" Mode="In" Type="String" />
+            <Parameter Name="EquipmentCID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="MainEquipmentNumber" Mode="In" Type="String" />
+            <Parameter Name="DepartmentID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentStatus" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="CtoE">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteComponentSP">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteEquipmentSP">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDate">
+            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRapport">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRapport2">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRapport3">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTechName">
+            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetWork">
+            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReadComponent2SP" ReturnType="Collection(Int32)">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReadComponentSimpleSP" />
+          <FunctionImport Name="ReadComponentSP" ReturnType="Collection(wiki_nolek_dk_dbModel.ReadComponentSP_Result)" />
+          <FunctionImport Name="ReadEquipment" ReturnType="Collection(wiki_nolek_dk_dbModel.ReadEquipment_Result)" />
+          <FunctionImport Name="ReadEquipmentSimpleSP" />
+          <FunctionImport Name="ReadEquipmentSuperSimple" />
+          <FunctionImport Name="ReadEquipmentTypeDesignationSP">
+            <Parameter Name="EquipmentTypeDesignation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReadImagePath" ReturnType="Collection(String)">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ServiceTime">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(wiki_nolek_dk_dbModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(wiki_nolek_dk_dbModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="UpdateImagePath">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentImagePath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdComponent">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+            <Parameter Name="ComponentName" Mode="In" Type="String" />
+            <Parameter Name="ComponentDescription" Mode="In" Type="String" />
+            <Parameter Name="NolekOrderNumber" Mode="In" Type="String" />
+            <Parameter Name="NolekSerialNumber" Mode="In" Type="String" />
+            <Parameter Name="ComponentQty" Mode="In" Type="Int32" />
+            <Parameter Name="ComponentSupplyNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdEquipment">
+            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+            <Parameter Name="DateOfCreation" Mode="In" Type="DateTime" />
+            <Parameter Name="EquipmentSerialNumber" Mode="In" Type="String" />
+            <Parameter Name="EquipmentConfigurationID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="MainEquipmentNumber" Mode="In" Type="String" />
+            <Parameter Name="NolekDepartmentID" Mode="In" Type="Int32" />
+            <Parameter Name="EquipmentStatus" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Error">
           <Key>
@@ -627,6 +903,8 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Errors" Relationship="wiki_nolek_dk_dbModel.FK_Error_Login" FromRole="Login" ToRole="Error" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="LoginRole" Relationship="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0" FromRole="Login" ToRole="LoginRole" />
         </EntityType>
         <EntityType Name="Nolek">
           <Key>
@@ -939,6 +1217,57 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Name="EquipmentTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EquipmentTypeDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="LoginRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logins" Relationship="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0" FromRole="LoginRole" ToRole="Login" />
+        </EntityType>
+        <Association Name="FK__Login__RoleId__0B27A5C0">
+          <End Type="wiki_nolek_dk_dbModel.LoginRole" Role="LoginRole" Multiplicity="0..1" />
+          <End Type="wiki_nolek_dk_dbModel.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="ReadComponentSP_Result">
+          <Property Type="Int32" Name="ComponentId" Nullable="false" />
+          <Property Type="String" Name="ComponentType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ComponentDescription" Nullable="true" />
+          <Property Type="String" Name="ComponentOrderNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ComponentSerialNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ComponentSupplyNumber" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ReadEquipment_Result">
+          <Property Type="Int32" Name="EquipmentId" Nullable="false" />
+          <Property Type="DateTime" Name="EquipmentDateCreated" Nullable="false" />
+          <Property Type="String" Name="EquipmentImagePath" Nullable="true" />
+          <Property Type="Int32" Name="EquipmentTypeID" Nullable="false" />
+          <Property Type="String" Name="EquipmentSerialnumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EquipmentMainEquipmentNumber" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="EquipmentConfigurationID" Nullable="false" />
+          <Property Type="Boolean" Name="EquipmentStatus" Nullable="false" />
+          <Property Type="Int32" Name="EquipmentCategoryId" Nullable="false" />
+          <Property Type="Int32" Name="ContactPersonId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1003,8 +1332,8 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.Login">
               <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="LoginId" ColumnName="LoginId" />
@@ -1137,6 +1466,89 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LoginRoles">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.LoginRole">
+              <MappingFragment StoreEntitySet="LoginRole">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CfromE" FunctionName="wiki_nolek_dk_dbModel.Store.CfromE" />
+          <FunctionImportMapping FunctionImportName="ComponentNametoID" FunctionName="wiki_nolek_dk_dbModel.Store.ComponentNametoID" />
+          <FunctionImportMapping FunctionImportName="CreateComponentSP" FunctionName="wiki_nolek_dk_dbModel.Store.CreateComponentSP" />
+          <FunctionImportMapping FunctionImportName="CreateEquipmentSP" FunctionName="wiki_nolek_dk_dbModel.Store.CreateEquipmentSP" />
+          <FunctionImportMapping FunctionImportName="CtoE" FunctionName="wiki_nolek_dk_dbModel.Store.CtoE" />
+          <FunctionImportMapping FunctionImportName="DeleteComponentSP" FunctionName="wiki_nolek_dk_dbModel.Store.DeleteComponentSP" />
+          <FunctionImportMapping FunctionImportName="DeleteEquipmentSP" FunctionName="wiki_nolek_dk_dbModel.Store.DeleteEquipmentSP" />
+          <FunctionImportMapping FunctionImportName="GetDate" FunctionName="wiki_nolek_dk_dbModel.Store.GetDate" />
+          <FunctionImportMapping FunctionImportName="GetRapport" FunctionName="wiki_nolek_dk_dbModel.Store.GetRapport" />
+          <FunctionImportMapping FunctionImportName="GetRapport2" FunctionName="wiki_nolek_dk_dbModel.Store.GetRapport2" />
+          <FunctionImportMapping FunctionImportName="GetRapport3" FunctionName="wiki_nolek_dk_dbModel.Store.GetRapport3" />
+          <FunctionImportMapping FunctionImportName="GetTechName" FunctionName="wiki_nolek_dk_dbModel.Store.GetTechName" />
+          <FunctionImportMapping FunctionImportName="GetWork" FunctionName="wiki_nolek_dk_dbModel.Store.GetWork" />
+          <FunctionImportMapping FunctionImportName="ReadComponent2SP" FunctionName="wiki_nolek_dk_dbModel.Store.ReadComponent2SP" />
+          <FunctionImportMapping FunctionImportName="ReadComponentSimpleSP" FunctionName="wiki_nolek_dk_dbModel.Store.ReadComponentSimpleSP" />
+          <FunctionImportMapping FunctionImportName="ReadComponentSP" FunctionName="wiki_nolek_dk_dbModel.Store.ReadComponentSP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="wiki_nolek_dk_dbModel.ReadComponentSP_Result">
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="ComponentType" ColumnName="ComponentType" />
+                <ScalarProperty Name="ComponentDescription" ColumnName="ComponentDescription" />
+                <ScalarProperty Name="ComponentOrderNumber" ColumnName="ComponentOrderNumber" />
+                <ScalarProperty Name="ComponentSerialNumber" ColumnName="ComponentSerialNumber" />
+                <ScalarProperty Name="ComponentSupplyNumber" ColumnName="ComponentSupplyNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReadEquipment" FunctionName="wiki_nolek_dk_dbModel.Store.ReadEquipment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="wiki_nolek_dk_dbModel.ReadEquipment_Result">
+                <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+                <ScalarProperty Name="EquipmentDateCreated" ColumnName="EquipmentDateCreated" />
+                <ScalarProperty Name="EquipmentImagePath" ColumnName="EquipmentImagePath" />
+                <ScalarProperty Name="EquipmentTypeID" ColumnName="EquipmentTypeID" />
+                <ScalarProperty Name="EquipmentSerialnumber" ColumnName="EquipmentSerialnumber" />
+                <ScalarProperty Name="EquipmentMainEquipmentNumber" ColumnName="EquipmentMainEquipmentNumber" />
+                <ScalarProperty Name="EquipmentConfigurationID" ColumnName="EquipmentConfigurationID" />
+                <ScalarProperty Name="EquipmentStatus" ColumnName="EquipmentStatus" />
+                <ScalarProperty Name="EquipmentCategoryId" ColumnName="EquipmentCategoryId" />
+                <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReadEquipmentSimpleSP" FunctionName="wiki_nolek_dk_dbModel.Store.ReadEquipmentSimpleSP" />
+          <FunctionImportMapping FunctionImportName="ReadEquipmentSuperSimple" FunctionName="wiki_nolek_dk_dbModel.Store.ReadEquipmentSuperSimple" />
+          <FunctionImportMapping FunctionImportName="ReadEquipmentTypeDesignationSP" FunctionName="wiki_nolek_dk_dbModel.Store.ReadEquipmentTypeDesignationSP" />
+          <FunctionImportMapping FunctionImportName="ReadImagePath" FunctionName="wiki_nolek_dk_dbModel.Store.ReadImagePath" />
+          <FunctionImportMapping FunctionImportName="ServiceTime" FunctionName="wiki_nolek_dk_dbModel.Store.ServiceTime" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="wiki_nolek_dk_dbModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="wiki_nolek_dk_dbModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="wiki_nolek_dk_dbModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="wiki_nolek_dk_dbModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="wiki_nolek_dk_dbModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="wiki_nolek_dk_dbModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="wiki_nolek_dk_dbModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="wiki_nolek_dk_dbModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="wiki_nolek_dk_dbModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="UpdateImagePath" FunctionName="wiki_nolek_dk_dbModel.Store.UpdateImagePath" />
+          <FunctionImportMapping FunctionImportName="UpdComponent" FunctionName="wiki_nolek_dk_dbModel.Store.UpdComponent" />
+          <FunctionImportMapping FunctionImportName="UpdEquipment" FunctionName="wiki_nolek_dk_dbModel.Store.UpdEquipment" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

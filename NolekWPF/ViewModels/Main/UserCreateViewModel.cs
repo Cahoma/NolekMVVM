@@ -161,7 +161,7 @@ namespace NolekWPF.ViewModels.Main
             var user = new Login();
             user.Username = ChangeUser.Username;
             user.Password = ChangeUser.Password;
-            user.Role = ChangeUser.Role;
+            user.RoleId = ChangeUser.RoleId;
             user.Active = ChangeUser.Active;
             user.LoginId = ChangeUser.LoginId;
             ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
@@ -176,7 +176,7 @@ namespace NolekWPF.ViewModels.Main
             user.LoginId = uuser.LoginId;
             user.Username = uuser.Username;
             user.Password = uuser.Password;
-            user.Role = uuser.Role;
+            user.RoleId = uuser.RoleId;
             user.Active = uuser.Active;
 
             ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();

@@ -70,6 +70,7 @@ namespace NolekWPF.ViewModels.Component
 
         public Model.Component UpdateComponent()
         {
+            _eventAggregator.GetEvent<AfterComponentCreated>().Publish();
             return new Model.Component();
         }
 

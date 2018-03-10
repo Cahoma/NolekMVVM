@@ -102,7 +102,7 @@ namespace NolekWPF.Equipment.ViewModels
         private bool OnEquipmentCreateCanExecute()
         {
             //validate fields to disable/enable buton
-            if (Equipment != null && !Equipment.HasErrors && CurrentUser.Role == "Secretary")
+            if (Equipment != null && !Equipment.HasErrors && CurrentUser.RoleId == 3)
             {
                 return true;
             }

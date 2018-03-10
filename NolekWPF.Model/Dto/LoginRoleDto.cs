@@ -8,7 +8,7 @@ namespace NolekWPF.Model.Dto
 {
     public class LoginRoleDto
     {
-        public int RoleId { get; set; }
+        public int LoginId { get; set; }
         public string Role { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace NolekWPF.Data.DataServices
                     LoginId = f.LoginId,
                     Username = f.Username,
                     Password = f.Password,
-                    Role = f.Role,
+                    RoleId = f.RoleId,
                     Active = f.Active
 
                 }).ToListAsync();

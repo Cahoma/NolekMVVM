@@ -31,14 +31,14 @@ namespace NolekWPF.Pages.Equipment
         private void PlaceholdersListBox_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
-            if (item != null && _viewmodel.CurrentUser.Role == "Secretary")
+            if (item != null && _viewmodel.CurrentUser.RoleId == 3)
             {
                 this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
             }
         }
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(_viewmodel.CurrentUser.Role == "Secretary")
+            if(_viewmodel.CurrentUser.RoleId == 3)
             {
                 this.NavigationService.Navigate(new DetailEquipmentPage(_viewmodel.EquipmentDetailViewModel));
             }        
