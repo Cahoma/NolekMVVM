@@ -13,28 +13,27 @@
            FontSize="20"></Label>
         <StackPanel Orientation="Horizontal">
             <TextBox Width="200" Name="SearchBar" Margin="10 0 0 5" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock IsHitTestVisible="False" Text="Search by Component Type" HorizontalAlignment="Left" Margin="-197,0,0,5" Foreground="DarkGray">
+            <ComboBox   
+                Name="cmComp"
+                MinWidth="150"
+                Margin="12 0 0 12"
+                ItemsSource="{Binding SelectedComponentLookup}"
+                DisplayMemberPath="ComponentChoice"
+                SelectedValuePath="ComponentChoice"
+                SelectedItem="{Binding ComponentChosen}">
+            </ComboBox>
+            <TextBlock Text="Search by..." IsHitTestVisible="False" Margin="-145 0 0 0">
                 <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Hidden"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+                            <DataTrigger Binding="{Binding ElementName=cmComp,Path=SelectedItem}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox   
-                Name="cmComp"
-                Margin="12 0 0 12"
-                ItemsSource="{Binding SelectedComponentLookup}"
-                DisplayMemberPath="ComponentChoice"
-                SelectedValuePath="ComponentChoice"
-                IsSynchronizedWithCurrentItem="True"
-                SelectedIndex="0"
-                SelectedItem="{Binding ComponentChosen}">
-            </ComboBox>
         </StackPanel>
         <DataGrid Width="auto"
               ItemsSource="{Binding Components}"

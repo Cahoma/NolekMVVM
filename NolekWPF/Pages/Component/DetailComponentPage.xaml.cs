@@ -21,10 +21,19 @@ namespace NolekWPF.Pages.Component
     /// </summary>
     public partial class DetailComponentPage : Page
     {
+        private IComponentDetailViewModel _viewmodel;
+
         public DetailComponentPage(IComponentDetailViewModel viewmodel)
         {
+            _viewmodel = viewmodel;
             InitializeComponent();
             DataContext = viewmodel;
+        }
+
+        private void compList_Click(object sender, RoutedEventArgs e)
+        {
+            //this.NavigationService.Navigate(new ListComponentPage(_viewmodel.ComponentListViewModel));
+            this.NavigationService.GoBack();
         }
     }
 }

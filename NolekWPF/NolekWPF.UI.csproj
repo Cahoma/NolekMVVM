@@ -130,6 +130,7 @@
     <Compile Include="Events\AfterEquipmentCreated.cs" />
     <Compile Include="Events\AfterUserLogin.cs" />
     <Compile Include="Events\OpenComponentDetailViewEvent.cs" />
+    <Compile Include="Events\OpenComponentListViewEvent.cs" />
     <Compile Include="Events\OpenCustomerDetailViewEvent.cs" />
     <Compile Include="Events\OpenEquipmentDetailViewEvent.cs" />
     <Compile Include="Events\AfterComponentCreated.cs" />
@@ -197,7 +198,9 @@
     <Compile Include="ViewModels\Equipment\IEquipmentListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserCreateViewModel.cs" />
+    <Compile Include="ViewModels\Main\IUserUpdateViewModel.cs" />
     <Compile Include="ViewModels\Main\UserCreateViewModel.cs" />
+    <Compile Include="ViewModels\Main\UserUpdateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Wrappers\ComponentWrapper.cs" />
     <Compile Include="Wrappers\CustomerWrapper.cs" />

@@ -18,13 +18,18 @@ namespace NolekWPF.ViewModels.Component
 {
     public class ComponentListViewModel : ViewModelBase, IComponentListViewModel
     {
+        public ICollectionView ComponentView { get; private set; }
+        public ObservableCollection<ComponentDto> Components { get; }
+
         private IComponentDataService _componentDataService;
         private IComponentRepository _componentRepository;
 
-        public ObservableCollection<ComponentDto> Components { get; }
+
         private IEventAggregator _eventAggregator;
         private IErrorDataService _errorDataService;
+
         public IComponentDetailViewModel ComponentDetailViewModel { get; }
+
         public Login CurrentUser { get; set; }
 
         public ComponentListViewModel(IComponentDataService componentDataService,
@@ -40,25 +45,20 @@ namespace NolekWPF.ViewModels.Component
             _eventAggregator.GetEvent<AfterComponentCreated>().Subscribe(RefreshList);
             ComponentDetailViewModel = componentDetailViewModel;
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
+            //_eventAggregator.GetEvent<OpenComponentListViewEvent>().Subscribe(RefreshList);
+        }
+
+        public async Task LoadComponentChoiceAsync()
+        {
+            var choice = await _componentRepository.GetComponentChoiceAsync();
+            SelectedComponentLookup = choice;
         }
 
         private void OnLogin(Login user)
         {
             CurrentUser = user;
         }
-
-        public ICollectionView ComponentView { get; private set; }
-
-        private string _filterString;
-        public string FilterString
-        {
-            get { return _filterString; }
-            set
-            {
-                _filterString = value;
-                FilterCollection();
-            }
-        }
+             
 
         private void FilterCollection()
         {
@@ -74,10 +74,26 @@ namespace NolekWPF.ViewModels.Component
 
             if (ComponentView != null)
             {
-                if (!string.IsNullOrEmpty(_filterString))
+                if (!string.IsNullOrEmpty(_filterString) && ComponentChosen != null)
                 {
                     string allcaps = _filterString.ToUpper();
-                    return data.ComponentType.Contains(_filterString) || data.ComponentType.Contains(allcaps);
+
+                    if(ComponentChosen.ComponentLookupId == 1) //search for type
+                    {
+                        return data.ComponentType.Contains(_filterString) || data.ComponentType.Contains(allcaps);
+                    }
+                    else if (ComponentChosen.ComponentLookupId == 2) //search for order
+                    {
+                        return data.ComponentOrderNumber.Contains(_filterString) || data.ComponentOrderNumber.Contains(allcaps);
+                    }
+                    else if (ComponentChosen.ComponentLookupId == 3) //search for serial
+                    {
+                        return data.ComponentSerialNumber.Contains(_filterString) || data.ComponentSerialNumber.Contains(allcaps);
+                    }
+                    else if (ComponentChosen.ComponentLookupId == 4) //search for supply
+                    {
+                        return data.ComponentSupplyNumber.Contains(_filterString) || data.ComponentSupplyNumber.Contains(allcaps);
+                    }                  
                 }
                 return true;
             }
@@ -117,14 +133,17 @@ namespace NolekWPF.ViewModels.Component
             }
         }
 
-        public async Task LoadComponentChoiceAsync()
+        private ComponentLookupDto _componentChosen;
+        public ComponentLookupDto ComponentChosen
         {
-            var choice = await _componentRepository.GetComponentChoiceAsync();
-            SelectedComponentLookup = choice;
+            get { return _componentChosen; }
+            set
+            {
+                _componentChosen = value;
+            }
         }
 
         private IEnumerable<ComponentLookupDto> _selectedComponentLookup;
-
         public IEnumerable<ComponentLookupDto> SelectedComponentLookup
         {
             get { return _selectedComponentLookup; }
@@ -135,7 +154,6 @@ namespace NolekWPF.ViewModels.Component
         }
 
         private ComponentDto _selectedComponent;
-
         public ComponentDto SelectedComponent
         {
             get { return _selectedComponent; }
@@ -147,6 +165,17 @@ namespace NolekWPF.ViewModels.Component
                     _eventAggregator.GetEvent<OpenComponentDetailViewEvent>()
                         .Publish(_selectedComponent.ComponentId);
                 }
+            }
+        }
+
+        private string _filterString;
+        public string FilterString
+        {
+            get { return _filterString; }
+            set
+            {
+                _filterString = value;
+                FilterCollection();
             }
         }
 

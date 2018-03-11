@@ -21,6 +21,7 @@ namespace NolekWPF.ViewModels.Component
         private IEventAggregator _eventAggregator;
         private IErrorDataService _errorDataService;
         public Login CurrentUser { get; set; }
+        //public IComponentListViewModel ComponentListViewModel { get; }
 
         public ComponentDetailViewModel(IComponentDataService dataService,
             IEventAggregator eventAggregator, IErrorDataService errorDataService, IComponentRepository componentRepository)
@@ -53,7 +54,7 @@ namespace NolekWPF.ViewModels.Component
             {
                 await _componentRepository.SaveAsync();
                 Component = UpdateComponent();
-                MessageBox.Show("Component was successfully updated.");
+                //_eventAggregator.GetEvent<OpenComponentListViewEvent>().Publish();
             }
             catch (Exception e)
             {
