@@ -16,6 +16,13 @@
           <Property Name="ComponentSerialNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ComponentSupplyNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ComponentChoice">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+          </Key>
+          <Property Name="ChoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompChoice" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ContactPerson">
           <Key>
             <PropertyRef Name="ContactPersonId" />
@@ -527,6 +534,7 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
         </Function>
         <EntityContainer Name="wiki_nolek_dk_dbModelStoreContainer">
           <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComponentChoice" EntityType="Self.ComponentChoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactPerson" EntityType="Self.ContactPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -744,16 +752,11 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <End Role="ServiceReport" EntitySet="ServiceReports" />
           </AssociationSet>
           <EntitySet Name="EquipmentViews" EntityType="wiki_nolek_dk_dbModel.EquipmentView" />
-          <EntitySet Name="LoginRoles" EntityType="wiki_nolek_dk_dbModel.LoginRole" />
-          <AssociationSet Name="FK__Login__RoleId__0B27A5C0" Association="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0">
-            <End Role="LoginRole" EntitySet="LoginRoles" />
-            <End Role="Login" EntitySet="Logins" />
-          </AssociationSet>
           <FunctionImport Name="CfromE">
-            <Parameter Name="EquipmentComponentID" Mode="In" Type="Int32" />
+          <Parameter Name="EquipmentComponentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ComponentNametoID">
-            <Parameter Name="ComponentName" Mode="In" Type="String" />
+          <Parameter Name="ComponentName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CreateComponentSP">
             <Parameter Name="ComponentID" Mode="In" Type="Int32" />
@@ -779,31 +782,31 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteComponentSP">
-            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteEquipmentSP">
-            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetDate">
-            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRapport">
-            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRapport2">
-            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRapport3">
-            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTechName">
-            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetWork">
-            <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
+          <Parameter Name="ServiceRapportID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ReadComponent2SP" ReturnType="Collection(Int32)">
-            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ReadComponentSimpleSP" />
           <FunctionImport Name="ReadComponentSP" ReturnType="Collection(wiki_nolek_dk_dbModel.ReadComponentSP_Result)" />
@@ -811,13 +814,13 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <FunctionImport Name="ReadEquipmentSimpleSP" />
           <FunctionImport Name="ReadEquipmentSuperSimple" />
           <FunctionImport Name="ReadEquipmentTypeDesignationSP">
-            <Parameter Name="EquipmentTypeDesignation" Mode="In" Type="String" />
+          <Parameter Name="EquipmentTypeDesignation" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ReadImagePath" ReturnType="Collection(String)">
-            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ServiceTime">
-            <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
+          <Parameter Name="EquipmentID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -872,6 +875,12 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <Parameter Name="NolekDepartmentID" Mode="In" Type="Int32" />
             <Parameter Name="EquipmentStatus" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="LoginRoles" EntityType="wiki_nolek_dk_dbModel.LoginRole" />
+          <AssociationSet Name="FK__Login__RoleId__0B27A5C0" Association="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0">
+            <End Role="LoginRole" EntitySet="LoginRoles" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <EntitySet Name="ComponentChoices" EntityType="wiki_nolek_dk_dbModel.ComponentChoice" />
           </EntityContainer>
         <EntityType Name="Error">
           <Key>
@@ -900,7 +909,6 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Errors" Relationship="wiki_nolek_dk_dbModel.FK_Error_Login" FromRole="Login" ToRole="Error" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="RoleId" Type="Int32" />
@@ -1217,26 +1225,6 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Name="EquipmentTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EquipmentTypeDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="LoginRole">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Logins" Relationship="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0" FromRole="LoginRole" ToRole="Login" />
-        </EntityType>
-        <Association Name="FK__Login__RoleId__0B27A5C0">
-          <End Type="wiki_nolek_dk_dbModel.LoginRole" Role="LoginRole" Multiplicity="0..1" />
-          <End Type="wiki_nolek_dk_dbModel.Login" Role="Login" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginRole">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="Login">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="ReadComponentSP_Result">
           <Property Type="Int32" Name="ComponentId" Nullable="false" />
           <Property Type="String" Name="ComponentType" Nullable="false" MaxLength="50" />
@@ -1268,6 +1256,33 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="LoginRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logins" Relationship="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0" FromRole="LoginRole" ToRole="Login" />
+        </EntityType>
+        <Association Name="FK__Login__RoleId__0B27A5C0">
+          <End Type="wiki_nolek_dk_dbModel.LoginRole" Role="LoginRole" Multiplicity="0..1" />
+          <End Type="wiki_nolek_dk_dbModel.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ComponentChoice">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+          </Key>
+          <Property Name="ChoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompChoice" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1466,14 +1481,6 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LoginRoles">
-            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.LoginRole">
-              <MappingFragment StoreEntitySet="LoginRole">
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CfromE" FunctionName="wiki_nolek_dk_dbModel.Store.CfromE" />
           <FunctionImportMapping FunctionImportName="ComponentNametoID" FunctionName="wiki_nolek_dk_dbModel.Store.ComponentNametoID" />
           <FunctionImportMapping FunctionImportName="CreateComponentSP" FunctionName="wiki_nolek_dk_dbModel.Store.CreateComponentSP" />
@@ -1549,6 +1556,22 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <FunctionImportMapping FunctionImportName="UpdateImagePath" FunctionName="wiki_nolek_dk_dbModel.Store.UpdateImagePath" />
           <FunctionImportMapping FunctionImportName="UpdComponent" FunctionName="wiki_nolek_dk_dbModel.Store.UpdComponent" />
           <FunctionImportMapping FunctionImportName="UpdEquipment" FunctionName="wiki_nolek_dk_dbModel.Store.UpdEquipment" />
+          <EntitySetMapping Name="LoginRoles">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.LoginRole">
+              <MappingFragment StoreEntitySet="LoginRole">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComponentChoices">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.ComponentChoice">
+              <MappingFragment StoreEntitySet="ComponentChoice">
+                <ScalarProperty Name="CompChoice" ColumnName="CompChoice" />
+                <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

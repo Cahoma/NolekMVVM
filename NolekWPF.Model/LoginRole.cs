@@ -12,22 +12,18 @@ namespace NolekWPF.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Login
+    public partial class LoginRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Login()
+        public LoginRole()
         {
-            this.Errors = new HashSet<Error>();
+            this.Logins = new HashSet<Login>();
         }
     
-        public int LoginId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public int RoleId { get; set; }
+        public string Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Error> Errors { get; set; }
-        public virtual LoginRole LoginRole { get; set; }
+        public virtual ICollection<Login> Logins { get; set; }
     }
 }

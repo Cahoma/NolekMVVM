@@ -98,6 +98,9 @@ namespace NolekWPF.ViewModels
             await EquipmentDetailViewModel.LoadCategoriesAsync();
 
             await UserCreateViewModel.LoadAsync();
+            await UserCreateViewModel.LoadRolesAsync();
+
+            await ComponentListViewModel.LoadComponentChoiceAsync();
         }
 
         public class HarvestPasswordEventArgs : EventArgs

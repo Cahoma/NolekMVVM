@@ -170,6 +170,9 @@
     <Compile Include="Pages\Main\CreateUser.xaml.cs">
       <DependentUpon>CreateUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Main\UpdateUser.xaml.cs">
+      <DependentUpon>UpdateUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModels\Component\ComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentDetailViewModel.cs" />
@@ -252,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Main\CreateUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\UpdateUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

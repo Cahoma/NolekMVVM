@@ -27,7 +27,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                     <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
-                    <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding RoleId}"/>
                     <DataGridTextColumn Header="ID" Binding="{Binding LoginId}"/>
                 </DataGrid.Columns>
                 <DataGrid.ItemContainerStyle>
@@ -69,10 +69,13 @@
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
             <Label Width="150">* Role:</Label>
-                <TextBox x:Name='txtRole'
-                Width='150'
-                Padding="2"
-                Text="{Binding NewUser.Role, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Width='100'
+                ItemsSource="{Binding LoginRoles}"
+                DisplayMemberPath="Role"
+                SelectedValuePath="RoleId"
+                SelectedValue="{Binding NewUser.RoleId, Mode=TwoWay}">
+                </ComboBox>
+         
             </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">

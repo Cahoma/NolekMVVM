@@ -101,5 +101,10 @@ namespace NolekWPF
         {
             mainframe.Navigate(new CreateUser(_viewModel.UserCreateViewModel));
         }
+
+        private void mnuUpdUser_Click(object sender, RoutedEventArgs e)
+        {
+            mainframe.Navigate(new UpdateUser(_viewModel.UserCreateViewModel));
+        }
     }
 }

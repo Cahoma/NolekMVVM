@@ -10,6 +10,7 @@ namespace NolekWPF.Data.Repositories
         void Add(Model.Login model);
         bool HasChanges();
         void Remove(Model.Login model);
+        Task<IEnumerable<LoginRoleDto>> GetLoginRoleAsync();
         Model.Login GetByIdAsync(int loginId);
         Task SaveAsync();
     }

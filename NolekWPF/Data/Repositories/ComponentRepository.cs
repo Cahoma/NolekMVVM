@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NolekWPF.Model;
 using System.Data.Entity;
+using NolekWPF.Model.Dto;
 
 namespace NolekWPF.Data.Repositories
 {
@@ -37,6 +38,15 @@ namespace NolekWPF.Data.Repositories
         public void Remove(Component model)
         {
             _context.Components.Remove(model); //delete equipment from the db
+        }
+
+        public async Task<IEnumerable<ComponentLookupDto>> GetComponentChoiceAsync()
+        {
+            return await _context.ComponentChoices.Select(c => new ComponentLookupDto()
+            {
+                ComponentLookupId = c.ChoiceId,
+                ComponentChoice = c.CompChoice
+            }).ToListAsync();
         }
 
         public async Task SaveAsync()

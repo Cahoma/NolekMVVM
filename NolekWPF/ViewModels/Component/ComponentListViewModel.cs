@@ -12,12 +12,15 @@ using System.Windows;
 using NolekWPF.Model.Dto;
 using System.ComponentModel;
 using System.Windows.Data;
+using NolekWPF.Data.Repositories;
 
 namespace NolekWPF.ViewModels.Component
 {
     public class ComponentListViewModel : ViewModelBase, IComponentListViewModel
     {
         private IComponentDataService _componentDataService;
+        private IComponentRepository _componentRepository;
+
         public ObservableCollection<ComponentDto> Components { get; }
         private IEventAggregator _eventAggregator;
         private IErrorDataService _errorDataService;
@@ -25,9 +28,11 @@ namespace NolekWPF.ViewModels.Component
         public Login CurrentUser { get; set; }
 
         public ComponentListViewModel(IComponentDataService componentDataService,
-            IEventAggregator eventAggregator, IErrorDataService errorDataService, IComponentDetailViewModel componentDetailViewModel)
+            IEventAggregator eventAggregator, IErrorDataService errorDataService, IComponentDetailViewModel componentDetailViewModel,
+            IComponentRepository componentRepository)
         {
             _componentDataService = componentDataService;
+            _componentRepository = componentRepository;
             Components = new ObservableCollection<ComponentDto>();
             //initialize event aggregator
             _eventAggregator = eventAggregator;
@@ -109,6 +114,23 @@ namespace NolekWPF.ViewModels.Component
                     LoginId = CurrentUser.LoginId
                 };
                 await _errorDataService.AddError(error);
+            }
+        }
+
+        public async Task LoadComponentChoiceAsync()
+        {
+            var choice = await _componentRepository.GetComponentChoiceAsync();
+            SelectedComponentLookup = choice;
+        }
+
+        private IEnumerable<ComponentLookupDto> _selectedComponentLookup;
+
+        public IEnumerable<ComponentLookupDto> SelectedComponentLookup
+        {
+            get { return _selectedComponentLookup; }
+            set
+            {
+                _selectedComponentLookup = value;
             }
         }
 

@@ -41,6 +41,15 @@ namespace NolekWPF.Data.Repositories
             return _context.Logins.Single(f => f.LoginId == loginId); //return equipement with the id
         }
 
+        public async Task<IEnumerable<LoginRoleDto>> GetLoginRoleAsync()
+        {
+            return await _context.LoginRoles.Select(c => new LoginRoleDto()
+            {
+                RoleId = c.RoleId,
+                Role = c.Role
+            }).ToListAsync();
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync(); //save all changes to the current context

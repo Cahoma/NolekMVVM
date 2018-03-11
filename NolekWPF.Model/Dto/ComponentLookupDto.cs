@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NolekWPF.Model.Dto
 {
-    public class LoginRoleDto
+    public class ComponentLookupDto
     {
-        public int RoleId { get; set; }
-        public string Role { get; set; }
+        public int ComponentLookupId { get; set; }
+        public string ComponentChoice { get; set; }
     }
 }

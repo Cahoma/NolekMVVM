@@ -19,6 +19,7 @@
                     <MenuItem Header="_Log out" Click="mnuLogout_Click" Command="{Binding LogoutCommand}"></MenuItem>
                     <MenuItem x:Name="mnuExit" Header="_Exit" Click="mnuExit_Click"></MenuItem>
                     <MenuItem x:Name="mnuNewUser" Header="_New User" Click="mnuNewUser_Click"></MenuItem>
+                    <MenuItem x:Name="mnuUpdUser" Header="_Change User info" Click="mnuUpdUser_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Equipment">
                     <MenuItem x:Name="mnuEquipList" Header="_List / Update" Click="mnuEquipList_Click"></MenuItem>

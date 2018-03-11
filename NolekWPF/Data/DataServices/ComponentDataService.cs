@@ -67,5 +67,18 @@ namespace NolekWPF.Data.DataServices
                 return await result.ToListAsync(); // or whatever non-deferred you want
             }
         }
+
+
+
+        //public List<ComponentLookupDto> GetComponent()
+        //{
+        //    //TODO: Load data from real database
+        //    List<ComponentLookupDto> Components = new List<ComponentLookupDto>();
+        //    Components.Add(new ComponentLookupDto { ComponentLookupId = 1, ComponentChoice = "ComponentType" });
+        //    Components.Add(new ComponentLookupDto { ComponentLookupId = 2, ComponentChoice = "ComponentOrderNumber" });
+        //    Components.Add(new ComponentLookupDto { ComponentLookupId = 3, ComponentChoice = "ComponentSerialNumber" });
+        //    Components.Add(new ComponentLookupDto { ComponentLookupId = 4, ComponentChoice = "ComponentSupplyNumber" });
+        //    return Components;
+        //}
     }
 }

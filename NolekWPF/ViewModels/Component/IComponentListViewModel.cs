@@ -12,5 +12,6 @@ namespace NolekWPF.ViewModels.Component
         ComponentDto SelectedComponent { get; set; }
 
         Task LoadAsync();
+        Task LoadComponentChoiceAsync();
     }
 }

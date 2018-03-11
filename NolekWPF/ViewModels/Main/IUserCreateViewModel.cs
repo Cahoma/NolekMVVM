@@ -17,5 +17,6 @@ namespace NolekWPF.ViewModels.Main
 
         ObservableCollection<UserLookup> Users { get; }
         Task LoadAsync();
+        Task LoadRolesAsync();
     }
 }

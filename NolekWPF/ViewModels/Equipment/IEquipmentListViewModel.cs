@@ -12,5 +12,6 @@ namespace NolekWPF.Equipment.ViewModels
         Login CurrentUser { get; set; }
 
         Task LoadAsync();
+        
     }
 }
