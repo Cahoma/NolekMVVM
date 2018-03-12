@@ -68,14 +68,14 @@ namespace NolekWPF.ViewModels.Main
         private async void OnLogin(Login user)
         {
             CurrentUser = user;
-            await LoadAsync();
+            await LoadAsync(CurrentUser.LoginId);
         }
 
-        public async Task LoadAsync()
+        public async Task LoadAsync(int loginId)
         {
             try
             {
-                Login = CurrentUser;
+                Login = await _userRepository.GetByIdAsync(loginId);
             }
             catch (Exception e)
             {
@@ -90,6 +90,7 @@ namespace NolekWPF.ViewModels.Main
                 await _errorDataService.AddError(error);
             }
         }
+
 
         private Login _login;
         public Login Login

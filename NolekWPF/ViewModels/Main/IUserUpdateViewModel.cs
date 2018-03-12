@@ -12,6 +12,6 @@ namespace NolekWPF.ViewModels.Main
     {
         Login Login { get; }
         ICommand ChangeCommand { get; }
-        Task LoadAsync();
+        Task LoadAsync(int loginId);
     }
 }

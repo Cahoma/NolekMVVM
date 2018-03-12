@@ -36,7 +36,7 @@ namespace NolekWPF.Data.Repositories
             _context.Logins.Remove(model); //delete equipment from the db
         }
 
-        public Model.Login GetByIdAsync(int loginId)
+        public Model.Login GetById(int loginId)
         {
             return _context.Logins.Single(f => f.LoginId == loginId); //return equipement with the id
         }
@@ -48,6 +48,11 @@ namespace NolekWPF.Data.Repositories
                 RoleId = c.RoleId,
                 Role = c.Role
             }).ToListAsync();
+        }
+
+        public async Task<Login> GetByIdAsync(int loginId)
+        {
+            return await _context.Logins.SingleAsync(f => f.LoginId == loginId); //return equipement with the id
         }
 
         public async Task SaveAsync()

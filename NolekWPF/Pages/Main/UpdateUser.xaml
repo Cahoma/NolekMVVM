@@ -36,7 +36,8 @@
                     Height="30"
                     Margin="12 12 0 0"
                     Content='Save changes'
-                    Command='{Binding ChangeCommand}'/>
+                    Command='{Binding ChangeCommand}'
+                    Click="GoBack"/>
         </StackPanel>
     </StackPanel>
 </Page>

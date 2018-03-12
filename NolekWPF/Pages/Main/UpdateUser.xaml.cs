@@ -26,5 +26,10 @@ namespace NolekWPF.Pages.Main
             DataContext = viewmodel;
             InitializeComponent();
         }
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            //this.NavigationService.Navigate(new ListComponentPage(_viewmodel.ComponentListViewModel));
+        }
     }
 }

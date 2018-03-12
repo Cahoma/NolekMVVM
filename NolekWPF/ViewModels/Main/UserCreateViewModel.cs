@@ -26,7 +26,6 @@ namespace NolekWPF.ViewModels.Main
     {
         public ICommand CreateUserCommand { get; }
         public ICommand UpdateUserCommand { get; }
-        public ICommand ChangeCommand { get; }
 
         private IUserRepository _userRepository;
         private IErrorDataService _errorDataService;
@@ -37,7 +36,6 @@ namespace NolekWPF.ViewModels.Main
 
         private bool _hasChanges;
         private Login _newuser;
-        private Login _changeUser;
 
         public ObservableCollection<UserLookup> Users { get; }
         public ICollectionView UserView { get; private set; }
@@ -49,7 +47,6 @@ namespace NolekWPF.ViewModels.Main
         {
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnUserCreateCanExecute);
             UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute, OnUserUpdateCanExecute);
-            ChangeCommand = new DelegateCommand(OnChangeUserExecute);
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
@@ -104,25 +101,10 @@ namespace NolekWPF.ViewModels.Main
             }
         }
 
-        private Login ToUpdateUser(UserLookup uuser) //calls the add method in the repository to insert new equipment and return it
-        {
-            var user = new Login();
-            user.LoginId = uuser.LoginId;
-            user.Username = uuser.Username;
-            user.Password = uuser.Password;
-            user.RoleId = uuser.RoleId;
-            user.Active = uuser.Active;
-
-            ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
-
-            //_userRepository.SaveAsync(); //context is aware of the equipment to add
-            return user;
-        }
-
         private bool OnUserUpdateCanExecute()
         {
             //validate fields to disable/enable button
-            if (ChangeUser != null)
+            if (NewUser != null)
             {
                 return true;
             }
@@ -137,7 +119,7 @@ namespace NolekWPF.ViewModels.Main
             try
             {
                 await _userRepository.SaveAsync();
-                ChangeUser = UpdateUser2();
+                //NewUser = UpdateUser2();
 
                 MessageBox.Show("User was successfully updated.");
                 await RefreshList();
@@ -148,7 +130,7 @@ namespace NolekWPF.ViewModels.Main
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage);
+                        MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage + dbEx.Message);
                     }
                 }
             }
@@ -156,46 +138,19 @@ namespace NolekWPF.ViewModels.Main
 
         private Login UpdateUser2()
         {
-            var user = new Login();
-            user.Username = ChangeUser.Username;
-            user.Password = ChangeUser.Password;
-            user.RoleId = ChangeUser.RoleId;
-            user.Active = ChangeUser.Active;
-            user.LoginId = ChangeUser.LoginId;
-            ((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
+            //var user = new Login();
+            //user.Username = ChangeUser.Username;
+            //user.Password = ChangeUser.Password;
+            //user.RoleId = ChangeUser.RoleId;
+            //user.Active = ChangeUser.Active;
+            //user.LoginId = ChangeUser.LoginId;
+            //((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
 
-            //_equipmentRepository.Update(equipment);
-            return user;
+            ////_equipmentRepository.Update(equipment);
+            //return user;
+            return new Login();
         }
 
-        //private bool OnUserChangeCanExecute()
-        //{
-        //    //validate fields to disable/enable button
-        //    if (CurrentUser != null)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        private async void OnChangeUserExecute()
-        {
-            try
-            {
-                await _userRepository.SaveAsync();
-                CurrentUser = UpdateUser2();
-
-                MessageBox.Show("User was successfully updated.");
-                await RefreshList();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }            
 
         public async Task LoadAsync()
         {
@@ -244,16 +199,6 @@ namespace NolekWPF.ViewModels.Main
             }
         }
 
-        public Login ChangeUser
-        {
-            get { return _changeUser; }
-            set
-            {
-                _changeUser = value;
-                OnPropertyChanged();
-            }
-        }
-
         public IEnumerable<LoginRoleDto> LoginRoles
         {
             get { return _loginRoles; }
@@ -274,11 +219,33 @@ namespace NolekWPF.ViewModels.Main
                 _selectedUser = value;
                 if(_selectedUser != null)
                 {
-                    ChangeUser = ToUpdateUser(_selectedUser);
+                    LoadAsync(_selectedUser.LoginId);
                     //NewUser = ToUpdateUser(_selectedUser);
                 }             
             }
         }
+
+        public async Task LoadAsync(int loginId)
+        {
+            try
+            {
+                NewUser = await _userRepository.GetByIdAsync(loginId);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "An error occurred", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Error error = new Error
+                {
+                    ErrorMessage = e.Message,
+                    ErrorTimeStamp = DateTime.Now,
+                    ErrorStackTrace = e.StackTrace,
+                    LoginId = CurrentUser.LoginId
+                };
+                await _errorDataService.AddError(error);
+            }
+        }
+
+
 
         public bool HasChanges //is true if changes has been made to equipment
         {
