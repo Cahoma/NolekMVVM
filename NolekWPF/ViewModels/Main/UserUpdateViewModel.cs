@@ -39,9 +39,30 @@ namespace NolekWPF.ViewModels.Main
         }
 
 
-        public void OnChangeUserExecute()
+        public async void OnChangeUserExecute()
         {
+            try
+            {
+                await _userRepository.SaveAsync();
+                Login = UpdateUser();
+                //_eventAggregator.GetEvent<OpenComponentListViewEvent>().Publish();
+            }
+            catch (Exception e)
+            {
+                Error error = new Error
+                {
+                    ErrorMessage = e.Message,
+                    ErrorTimeStamp = DateTime.Now,
+                    ErrorStackTrace = e.StackTrace,
+                    LoginId = CurrentUser.LoginId
+                };
+                await _errorDataService.AddError(error);
+            }
+        }
 
+        public Login UpdateUser()
+        {
+            return new Login();
         }
 
         private async void OnLogin(Login user)
@@ -54,7 +75,7 @@ namespace NolekWPF.ViewModels.Main
         {
             try
             {
-                User = CurrentUser;
+                Login = CurrentUser;
             }
             catch (Exception e)
             {
@@ -70,13 +91,13 @@ namespace NolekWPF.ViewModels.Main
             }
         }
 
-        private Login _user;
-        public Login User
+        private Login _login;
+        public Login Login
         {
-            get { return _user; }
+            get { return _login; }
             private set
             {
-                _user = value;
+                _login = value;
                 OnPropertyChanged();
             }
         }

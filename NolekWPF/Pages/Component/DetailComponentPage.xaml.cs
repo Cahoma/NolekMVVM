@@ -21,11 +21,8 @@ namespace NolekWPF.Pages.Component
     /// </summary>
     public partial class DetailComponentPage : Page
     {
-        private IComponentDetailViewModel _viewmodel;
-
         public DetailComponentPage(IComponentDetailViewModel viewmodel)
         {
-            _viewmodel = viewmodel;
             InitializeComponent();
             DataContext = viewmodel;
         }

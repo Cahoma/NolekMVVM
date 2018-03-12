@@ -20,7 +20,7 @@
             <TextBox x:Name='txtName'
                Width='150'
                Padding="2"
-               Text="{Binding CurrentUser.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+               Text="{Binding Login.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
@@ -28,7 +28,7 @@
             <TextBox x:Name='txtPassword'
                Width='150'
                Padding="2"
-               Text="{Binding CurrentUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+               Text="{Binding Login.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Orientation="
                Horizontal">

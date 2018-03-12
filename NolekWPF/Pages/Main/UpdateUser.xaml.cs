@@ -21,7 +21,7 @@ namespace NolekWPF.Pages.Main
     /// </summary>
     public partial class UpdateUser : Page
     {
-        public UpdateUser(IUserCreateViewModel viewmodel)
+        public UpdateUser(IUserUpdateViewModel viewmodel)
         {
             DataContext = viewmodel;
             InitializeComponent();
