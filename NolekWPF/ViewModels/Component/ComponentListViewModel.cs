@@ -24,7 +24,6 @@ namespace NolekWPF.ViewModels.Component
         private IComponentDataService _componentDataService;
         private IComponentRepository _componentRepository;
 
-
         private IEventAggregator _eventAggregator;
         private IErrorDataService _errorDataService;
 

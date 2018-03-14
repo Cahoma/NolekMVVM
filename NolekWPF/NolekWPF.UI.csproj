@@ -52,10 +52,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4C5D60C19A9D6DA3182697F669F7BF95BD48E08E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B541F55290EAC09440F9CE6F6BD5237B22FC7AC7</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>NolekWPF.UI_2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>NolekWPF.UI_3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -129,11 +129,13 @@
     <Compile Include="Events\AfterCustomerCreated.cs" />
     <Compile Include="Events\AfterEquipmentCreated.cs" />
     <Compile Include="Events\AfterUserLogin.cs" />
+    <Compile Include="Events\AfterUserUpdated.cs" />
     <Compile Include="Events\OpenComponentDetailViewEvent.cs" />
     <Compile Include="Events\OpenComponentListViewEvent.cs" />
     <Compile Include="Events\OpenCustomerDetailViewEvent.cs" />
     <Compile Include="Events\OpenEquipmentDetailViewEvent.cs" />
     <Compile Include="Events\AfterComponentCreated.cs" />
+    <Compile Include="Events\OpenUserUpdateAdminViewEvent.cs" />
     <Compile Include="Helpers\AccessLevelToVisibilityConverter.cs" />
     <Compile Include="Helpers\BoolToVisibleOrCollapsed.cs" />
     <Compile Include="Helpers\ConvertTextToImage.cs" />
@@ -174,6 +176,9 @@
     <Compile Include="Pages\Main\UpdateUser.xaml.cs">
       <DependentUpon>UpdateUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Main\UpdateUserAdmin.xaml.cs">
+      <DependentUpon>UpdateUserAdmin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModels\Component\ComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentDetailViewModel.cs" />
@@ -198,8 +203,10 @@
     <Compile Include="ViewModels\Equipment\IEquipmentListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserCreateViewModel.cs" />
+    <Compile Include="ViewModels\Main\IUserUpdateAdminViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserUpdateViewModel.cs" />
     <Compile Include="ViewModels\Main\UserCreateViewModel.cs" />
+    <Compile Include="ViewModels\Main\UserUpdateAdminViewModel.cs" />
     <Compile Include="ViewModels\Main\UserUpdateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Wrappers\ComponentWrapper.cs" />
@@ -265,6 +272,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Main\UpdateUserAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -286,6 +297,7 @@
     </EmbeddedResource>
     <None Include="NolekWPF.UI_1_TemporaryKey.pfx" />
     <None Include="NolekWPF.UI_2_TemporaryKey.pfx" />
+    <None Include="NolekWPF.UI_3_TemporaryKey.pfx" />
     <None Include="NolekWPF.UI_TemporaryKey.pfx" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

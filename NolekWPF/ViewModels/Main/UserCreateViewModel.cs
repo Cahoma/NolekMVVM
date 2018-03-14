@@ -36,29 +36,32 @@ namespace NolekWPF.ViewModels.Main
 
         private bool _hasChanges;
         private Login _newuser;
+        public Login CurrentUser { get; set; }
 
         public ObservableCollection<UserLookup> Users { get; }
         public ICollectionView UserView { get; private set; }
-        public Login CurrentUser { get; set; }
+
+        public IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
 
         public UserCreateViewModel(IUserRepository userRepository, IErrorDataService errorDataService, IUserLookupDataService userLookupDataService,
-            IEventAggregator eventAggregator
+            IEventAggregator eventAggregator, IUserUpdateAdminViewModel userUpdateAdminViewModel
             )
         {
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnUserCreateCanExecute);
-            UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute, OnUserUpdateCanExecute);
+            //UpdateUserCommand = new DelegateCommand(OnUpdateUserExecute, OnUserUpdateCanExecute);
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
             _userLookupDataService = userLookupDataService;
             _eventAggregator = eventAggregator;
+            UserUpdateAdminViewModel = userUpdateAdminViewModel;
 
             Users = new ObservableCollection<UserLookup>();
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
+            _eventAggregator.GetEvent<AfterUserUpdated>().Subscribe(RefreshList);
 
             NewUser = CreateNewUser();
         }
-
 
         private Login CreateNewUser() //calls the add method in the repository to insert new equipment and return it
         {
@@ -67,7 +70,7 @@ namespace NolekWPF.ViewModels.Main
 
             //default values
             user.Active = true;
-
+            user.RoleId = 3;
             _userRepository.Add(user); //context is aware of the equipment to add
 
             return user;
@@ -93,7 +96,7 @@ namespace NolekWPF.ViewModels.Main
                 NewUser = CreateNewUser();
 
                 MessageBox.Show("User was successfully created.");
-                await RefreshList();
+                RefreshList();
             }
             catch (Exception e)
             {
@@ -114,42 +117,42 @@ namespace NolekWPF.ViewModels.Main
             }
         }
 
-        private async void OnUpdateUserExecute()
-        {
-            try
-            {
-                await _userRepository.SaveAsync();
-                //NewUser = UpdateUser2();
+        //private async void OnUpdateUserExecute()
+        //{
+        //    try
+        //    {
+        //        await _userRepository.SaveAsync();
+        //        //NewUser = UpdateUser2();
 
-                MessageBox.Show("User was successfully updated.");
-                await RefreshList();
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage + dbEx.Message);
-                    }
-                }
-            }
-        }
+        //        MessageBox.Show("User was successfully updated.");
+        //        RefreshList();
+        //    }
+        //    catch (DbEntityValidationException dbEx)
+        //    {
+        //        foreach (var validationErrors in dbEx.EntityValidationErrors)
+        //        {
+        //            foreach (var validationError in validationErrors.ValidationErrors)
+        //            {
+        //                MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage + dbEx.Message);
+        //            }
+        //        }
+        //    }
+        //}
 
-        private Login UpdateUser2()
-        {
-            //var user = new Login();
-            //user.Username = ChangeUser.Username;
-            //user.Password = ChangeUser.Password;
-            //user.RoleId = ChangeUser.RoleId;
-            //user.Active = ChangeUser.Active;
-            //user.LoginId = ChangeUser.LoginId;
-            //((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
+        //private Login UpdateUser2()
+        //{
+        //    var user = new Login();
+        //    //user.Username = ChangeUser.Username;
+        //    //user.Password = ChangeUser.Password;
+        //    //user.RoleId = ChangeUser.RoleId;
+        //    //user.Active = ChangeUser.Active;
+        //    //user.LoginId = ChangeUser.LoginId;
+        //    //((DelegateCommand)UpdateUserCommand).RaiseCanExecuteChanged();
 
-            ////_equipmentRepository.Update(equipment);
-            //return user;
-            return new Login();
-        }
+        //    ////_equipmentRepository.Update(equipment);
+        //    //return user;
+        //    return user;
+        //}
 
 
         public async Task LoadAsync()
@@ -179,7 +182,7 @@ namespace NolekWPF.ViewModels.Main
             LoginRoles = roles;
         }
 
-        public async Task RefreshList()
+        public async void RefreshList()
         {
             await LoadAsync();
         }
@@ -217,11 +220,17 @@ namespace NolekWPF.ViewModels.Main
             set
             {
                 _selectedUser = value;
-                if(_selectedUser != null)
+                //if(_selectedUser != null)
+                //{
+                //    LoadAsync(_selectedUser.LoginId);
+                //    //NewUser = ToUpdateUser(_selectedUser);
+                //}
+
+                if (_selectedUser != null && CurrentUser.RoleId == 3)
                 {
-                    LoadAsync(_selectedUser.LoginId);
-                    //NewUser = ToUpdateUser(_selectedUser);
-                }             
+                    _eventAggregator.GetEvent<OpenUserUpdateAdminViewEvent>()
+                        .Publish(_selectedUser.LoginId);
+                }
             }
         }
 

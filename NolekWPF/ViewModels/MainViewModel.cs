@@ -41,6 +41,7 @@ namespace NolekWPF.ViewModels
         public IAddRemoveEquipmentToFromCustomerViewModel AddRemoveEquipmentToFromCustomerViewModel { get; }
         public IUserCreateViewModel UserCreateViewModel { get; }
         public IUserUpdateViewModel UserUpdateViewModel { get; }
+        public IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
 
         private IUserLookupDataService _userLookupDataService;
         private IUserDataService _userDataService;
@@ -54,7 +55,8 @@ namespace NolekWPF.ViewModels
             IComponentCreateViewModel componentCreateViewModel, IComponentListViewModel componentListViewModel,
             IUserLookupDataService userLookupDataService, IEventAggregator eventAggregator, IUserDataService userDataService,
             IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel,
-            IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel, IUserCreateViewModel userCreateViewModel, IUserUpdateViewModel userUpdateViewModel)
+            IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel, IUserCreateViewModel userCreateViewModel, 
+            IUserUpdateViewModel userUpdateViewModel, IUserUpdateAdminViewModel userUpdateAdminViewModel)
         {
             EquipmentListViewModel = equipmentListViewModel;
             EquipmentCreateViewModel = equipmentCreateViewModel;
@@ -68,14 +70,14 @@ namespace NolekWPF.ViewModels
             AddRemoveEquipmentToFromCustomerViewModel = addRemoveEquipmentToFromCustomerViewModel;
             UserCreateViewModel = userCreateViewModel;
             UserUpdateViewModel = userUpdateViewModel;
+            UserUpdateAdminViewModel = userUpdateAdminViewModel;
             _eventAggregator = eventAggregator;
 
             _userLookupDataService = userLookupDataService;
             _userDataService = userDataService;
 
             MenuVisibility = "Collapsed";
-            Username = "UserSecretary";
-
+            Username = "UserAdmin";
 
             LoginCommand = new DelegateCommand(Login);
             LogoutCommand = new DelegateCommand(Logout);
@@ -103,6 +105,7 @@ namespace NolekWPF.ViewModels
             await UserCreateViewModel.LoadRolesAsync();
 
             await ComponentListViewModel.LoadComponentChoiceAsync();
+            await UserUpdateAdminViewModel.LoadRolesAsync();
         }
 
         public class HarvestPasswordEventArgs : EventArgs
@@ -218,9 +221,7 @@ namespace NolekWPF.ViewModels
         {
             //TODO check username and password vs database here.
             //If using membershipprovider then just call Membership.ValidateUser(UserName, Password)
-            var lookup = await _userLookupDataService.GetUserLookupAsync();
-
-            
+            var lookup = await _userLookupDataService.GetUserLookupAsync();           
 
             //List<User> Users = _userDataService.GetUser();
             foreach (var user in lookup)

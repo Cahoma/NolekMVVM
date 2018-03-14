@@ -32,6 +32,8 @@
                 </DataGrid.Columns>
                 <DataGrid.ItemContainerStyle>
                     <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick"
+                         Handler="Row_DoubleClick" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Active}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -75,7 +77,6 @@
                 SelectedValuePath="RoleId"
                 SelectedValue="{Binding NewUser.RoleId, Mode=TwoWay}">
                 </ComboBox>
-         
             </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Margin="0 0 0 12">
@@ -89,18 +90,12 @@
 
     <StackPanel Orientation="
                Horizontal">
-            <Button Width='100'
+                <Button Width='100'
                     Height="30"
                     Margin="12 12 0 0"
                     Content='Create'
                     Command='{Binding CreateUserCommand}'/>
-            <Button Width='100'
-                    Height="30"
-                    Margin="12 12 0 0"
-                    Content='Update'
-                    Command='{Binding UpdateUserCommand}'
-                    />
-        </StackPanel>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Page>

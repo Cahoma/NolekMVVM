@@ -16,6 +16,27 @@
         <Label Content="Equipment List"
            FontSize="20"></Label>
         <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="10,0,0,10"  Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        <ComboBox   
+                Name="cmEquip"
+                MinWidth="150"
+                Margin="12 0 0 12"
+                ItemsSource="{Binding SelectedEquipmentSearch}"
+                DisplayMemberPath="EquipmentChoice"
+                SelectedValuePath="EquipmentChoice"
+                SelectedItem="{Binding EquipmentChosen}">
+        </ComboBox>
+        <TextBlock Text="Search by..." IsHitTestVisible="False" Margin="-145 0 0 0">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=cmEquip,Path=SelectedItem}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <TextBlock IsHitTestVisible="False" Text="Search by Type Name" HorizontalAlignment="Left" Margin="13,-28,0,0" Foreground="DarkGray">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -96,14 +117,13 @@
                                         <TextBlock Text="{Binding ContactPersonTelephone}"></TextBlock>
                                     </StackPanel>
                                 </Grid>
-                                
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
+
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>
-
     </StackPanel>
 </Page>

@@ -12,10 +12,13 @@ namespace NolekWPF.ViewModels.Main
         ICommand CreateUserCommand { get; }
         ICommand UpdateUserCommand { get; }
         Login NewUser { get; }
+        Login CurrentUser { get; }
         UserLookup SelectedUser { get; set; }
 
         ObservableCollection<UserLookup> Users { get; }
         Task LoadAsync();
         Task LoadRolesAsync();
+
+        IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
     }
 }

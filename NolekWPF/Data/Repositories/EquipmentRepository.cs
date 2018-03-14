@@ -122,6 +122,15 @@ namespace NolekWPF.Data.Repositories
                 });
         }
 
+        public async Task<IEnumerable<ComponentLookupDto>> GetComponentChoiceAsync()
+        {
+            return await _context.ComponentChoices.Select(c => new ComponentLookupDto()
+            {
+                ComponentLookupId = c.ChoiceId,
+                ComponentChoice = c.CompChoice
+            }).ToListAsync();
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync(); //save all changes to the current context

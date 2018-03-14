@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using System.Windows.Data;
+using NolekWPF.Model.Dto;
 
 namespace NolekWPF.Equipment.ViewModels
 {
@@ -40,6 +41,32 @@ namespace NolekWPF.Equipment.ViewModels
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
             EquipmentDetailViewModel = equipmentDetailViewModel;
             LoadDetailData();            
+        }
+
+        public async Task LoadEquipmentChoiceAsync()
+        {
+            var choice = await _equipmentRepository.GetEquipmentChoiceAsync();
+            SelectedEquipmentLookup = choice;
+        }
+
+        private EquipmentSearchDto _equipmentChosen;
+        public EquipmentSearchDto EquipmentChosen
+        {
+            get { return _equipmentChosen; }
+            set
+            {
+                _equipmentChosen = value;
+            }
+        }
+
+        private IEnumerable<EquipmentSearchDto> _selectedEquipmentLookup;
+        public IEnumerable<EquipmentSearchDto> SelectedEquipmentLookup
+        {
+            get { return _selectedEquipmentLookup; }
+            set
+            {
+                _selectedEquipmentLookup = value;
+            }
         }
 
         public ICollectionView EquipmentView { get; private set; }
