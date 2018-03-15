@@ -87,6 +87,7 @@ namespace NolekWPF.ViewModels
         {
             //load list data
             await EquipmentListViewModel.LoadAsync();
+            await EquipmentListViewModel.LoadEquipmentChoiceAsync();
             await ComponentListViewModel.LoadAsync();
             await CustomerListViewModel.LoadAsync();
             await CustomerCreateViewModel.LoadEquipment();

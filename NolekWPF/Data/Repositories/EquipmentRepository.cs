@@ -122,12 +122,12 @@ namespace NolekWPF.Data.Repositories
                 });
         }
 
-        public async Task<IEnumerable<ComponentLookupDto>> GetComponentChoiceAsync()
+        public async Task<IEnumerable<EquipmentSearchDto>> GetEquipmentChoiceAsync()
         {
-            return await _context.ComponentChoices.Select(c => new ComponentLookupDto()
+            return await _context.EquipmentChoices.Select(c => new EquipmentSearchDto()
             {
-                ComponentLookupId = c.ChoiceId,
-                ComponentChoice = c.CompChoice
+                EquipmentSearchId = c.ChoiceId,
+                EquipmentChoice = c.EquipChoice
             }).ToListAsync();
         }
 

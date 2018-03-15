@@ -47,6 +47,7 @@ namespace NolekWPF.DataAccess
         public virtual DbSet<EquipmentView> EquipmentViews { get; set; }
         public virtual DbSet<LoginRole> LoginRoles { get; set; }
         public virtual DbSet<ComponentChoice> ComponentChoices { get; set; }
+        public virtual DbSet<EquipmentChoice> EquipmentChoices { get; set; }
     
         public virtual int CfromE(Nullable<int> equipmentComponentID)
         {

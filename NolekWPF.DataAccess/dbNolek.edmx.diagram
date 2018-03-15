@@ -40,6 +40,7 @@
         <EntityTypeShape EntityType="wiki_nolek_dk_dbModel.LoginRole" Width="1.5" PointX="8.5" PointY="11.75" />
         <AssociationConnector Association="wiki_nolek_dk_dbModel.FK__Login__RoleId__0B27A5C0" />
         <EntityTypeShape EntityType="wiki_nolek_dk_dbModel.ComponentChoice" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="wiki_nolek_dk_dbModel.EquipmentChoice" Width="1.5" PointX="11.375" PointY="12.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

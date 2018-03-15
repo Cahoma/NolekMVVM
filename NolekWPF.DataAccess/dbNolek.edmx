@@ -89,6 +89,13 @@
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="EquipmentChoice">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+          </Key>
+          <Property Name="ChoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipChoice" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="EquipmentComponent">
           <Key>
             <PropertyRef Name="EquipmentID" />
@@ -542,6 +549,7 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <EntitySet Name="CustomerEquipment" EntityType="Self.CustomerEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentCategory" EntityType="Self.EquipmentCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentChoice" EntityType="Self.EquipmentChoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentComponent" EntityType="Self.EquipmentComponent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentConfiguration" EntityType="Self.EquipmentConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" Schema="dbo" store:Type="Tables" />
@@ -881,6 +889,7 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <End Role="Login" EntitySet="Logins" />
           </AssociationSet>
           <EntitySet Name="ComponentChoices" EntityType="wiki_nolek_dk_dbModel.ComponentChoice" />
+          <EntitySet Name="EquipmentChoices" EntityType="wiki_nolek_dk_dbModel.EquipmentChoice" />
           </EntityContainer>
         <EntityType Name="Error">
           <Key>
@@ -1283,6 +1292,13 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
           <Property Name="ChoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompChoice" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="EquipmentChoice">
+          <Key>
+            <PropertyRef Name="ChoiceId" />
+          </Key>
+          <Property Name="ChoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipChoice" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1568,6 +1584,14 @@ warning 6002: The table/view 'wiki_nolek_dk_db.dbo.EquipmentView' does not have 
             <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.ComponentChoice">
               <MappingFragment StoreEntitySet="ComponentChoice">
                 <ScalarProperty Name="CompChoice" ColumnName="CompChoice" />
+                <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentChoices">
+            <EntityTypeMapping TypeName="wiki_nolek_dk_dbModel.EquipmentChoice">
+              <MappingFragment StoreEntitySet="EquipmentChoice">
+                <ScalarProperty Name="EquipChoice" ColumnName="EquipChoice" />
                 <ScalarProperty Name="ChoiceId" ColumnName="ChoiceId" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -82,6 +82,9 @@
     <Compile Include="EquipmentCategory.cs">
       <DependentUpon>dbNolek.tt</DependentUpon>
     </Compile>
+    <Compile Include="EquipmentChoice.cs">
+      <DependentUpon>dbNolek.tt</DependentUpon>
+    </Compile>
     <Compile Include="EquipmentComponent.cs">
       <DependentUpon>dbNolek.tt</DependentUpon>
     </Compile>

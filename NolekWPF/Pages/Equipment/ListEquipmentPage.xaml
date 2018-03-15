@@ -12,7 +12,8 @@
     <Page.Resources>
         <helpers:ConvertTextToImage x:Key="convert" />
     </Page.Resources>
-    <StackPanel Orientation="Vertical">
+    <StackPanel>
+    <StackPanel Orientation="Horizontal">
         <Label Content="Equipment List"
            FontSize="20"></Label>
         <TextBox x:Name="SearchBar" HorizontalAlignment="Left" Margin="10,0,0,10"  Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
@@ -20,7 +21,7 @@
                 Name="cmEquip"
                 MinWidth="150"
                 Margin="12 0 0 12"
-                ItemsSource="{Binding SelectedEquipmentSearch}"
+                ItemsSource="{Binding SelectedEquipmentLookup}"
                 DisplayMemberPath="EquipmentChoice"
                 SelectedValuePath="EquipmentChoice"
                 SelectedItem="{Binding EquipmentChosen}">
@@ -37,18 +38,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <TextBlock IsHitTestVisible="False" Text="Search by Type Name" HorizontalAlignment="Left" Margin="13,-28,0,0" Foreground="DarkGray">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        </StackPanel>
         <ScrollViewer  VerticalScrollBarVisibility="Auto"
                    Height="Auto">
             <DataGrid MaxHeight="800"

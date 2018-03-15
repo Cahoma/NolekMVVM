@@ -16,12 +16,15 @@ using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using System.Windows.Data;
 using NolekWPF.Model.Dto;
+using NolekWPF.Data.Repositories;
 
 namespace NolekWPF.Equipment.ViewModels
 {
     public class EquipmentListViewModel : ViewModelBase, IEquipmentListViewModel
     {
         private IEquipmentLookupDataService _equipmentLookupDataService;
+        private IEquipmentRepository _equipmentRepository;
+
         public ObservableCollection<EquipmentLookup> Equipments { get; }
         
         private IEventAggregator _eventAggregator;
@@ -30,13 +33,15 @@ namespace NolekWPF.Equipment.ViewModels
         ConvertTextToImage cv = new ConvertTextToImage();
 
         public EquipmentListViewModel(IEquipmentLookupDataService equipmentLookupDataService,
-            IEventAggregator eventAggregator, IErrorDataService errorDataService, IEquipmentDetailViewModel equipmentDetailViewModel)
+            IEventAggregator eventAggregator, IErrorDataService errorDataService, IEquipmentDetailViewModel equipmentDetailViewModel,
+            IEquipmentRepository equipmentRepository)
         {
             _equipmentLookupDataService = equipmentLookupDataService;
             Equipments = new ObservableCollection<EquipmentLookup>();
             //initialize event aggregator
             _eventAggregator = eventAggregator;
             _errorDataService = errorDataService;
+            _equipmentRepository = equipmentRepository;
             _eventAggregator.GetEvent<AfterEquipmentCreated>().Subscribe(RefreshList);
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
             EquipmentDetailViewModel = equipmentDetailViewModel;
@@ -96,10 +101,38 @@ namespace NolekWPF.Equipment.ViewModels
             
             if (EquipmentView != null)
             {
-                if (!string.IsNullOrEmpty(_filterString))
+                if (!string.IsNullOrEmpty(_filterString) && EquipmentChosen != null)
                 {
                     string allcaps = _filterString.ToUpper();
-                    return data.TypeName.Contains(_filterString) || data.TypeName.Contains(allcaps);
+
+                    //if (EquipmentChosen.EquipmentSearchId == 1) //search for id
+                    //{
+                    //    return data.EquipmentId.Equals(_filterString);
+                    //}
+                    //else if (EquipmentChosen.EquipmentSearchId == 2) //search for date created
+                    //{
+                    //    return data.DateCreated.Contains(_filterString) || data.ComponentOrderNumber.Contains(allcaps);
+                    //}
+                    if (EquipmentChosen.EquipmentSearchId == 3) //search for serial
+                    {
+                        return data.SerialNumber.Contains(_filterString) || data.SerialNumber.Contains(allcaps);
+                    }
+                    else if (EquipmentChosen.EquipmentSearchId == 4) //search for mainequipmentnumber
+                    {
+                        return data.MainEquipmentNumber.Contains(_filterString) || data.MainEquipmentNumber.Contains(allcaps);
+                    }
+                    else if (EquipmentChosen.EquipmentSearchId == 5) //search for type
+                    {
+                        return data.TypeName.Contains(_filterString) || data.TypeName.Contains(allcaps);
+                    }
+                    else if (EquipmentChosen.EquipmentSearchId == 6) //search for category
+                    {
+                        return data.Category.Contains(_filterString) || data.Category.Contains(allcaps);
+                    }
+                    else if (EquipmentChosen.EquipmentSearchId == 7) //search for mainequipmentnumber
+                    {
+                        return data.Configuration.Contains(_filterString) || data.Configuration.Contains(allcaps);
+                    }
                 }
                 return true;
             }

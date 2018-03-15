@@ -20,5 +20,6 @@ namespace NolekWPF.Data.Repositories
         Task SaveAsync();
         void Update(Model.Equipment model);
         void UpdateComponents(ComponentDto model, int equipmentId);
+        Task<IEnumerable<EquipmentSearchDto>> GetEquipmentChoiceAsync();
     }
 }
