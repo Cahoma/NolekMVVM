@@ -67,6 +67,7 @@ namespace NolekWPF.Startup
             builder.RegisterType<UserCreateViewModel>().As<IUserCreateViewModel>();
             builder.RegisterType<UserUpdateViewModel>().As<IUserUpdateViewModel>();
             builder.RegisterType<UserUpdateAdminViewModel>().As<IUserUpdateAdminViewModel>();
+            builder.RegisterType<UserCheckLoginViewModel>().As<IUserCheckLoginViewModel>();
 
             builder.RegisterType<MainViewModel>().AsSelf();
 

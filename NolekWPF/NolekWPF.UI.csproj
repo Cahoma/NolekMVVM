@@ -136,6 +136,7 @@
     <Compile Include="Events\OpenEquipmentDetailViewEvent.cs" />
     <Compile Include="Events\AfterComponentCreated.cs" />
     <Compile Include="Events\OpenUserUpdateAdminViewEvent.cs" />
+    <Compile Include="Events\UserCheck.cs" />
     <Compile Include="Helpers\AccessLevelToVisibilityConverter.cs" />
     <Compile Include="Helpers\BoolToVisibleOrCollapsed.cs" />
     <Compile Include="Helpers\ConvertTextToImage.cs" />
@@ -170,6 +171,9 @@
     <Compile Include="Pages\Equipment\ListEquipmentPage.xaml.cs">
       <DependentUpon>ListEquipmentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Main\CheckUser.xaml.cs">
+      <DependentUpon>CheckUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Main\CreateUser.xaml.cs">
       <DependentUpon>CreateUser.xaml</DependentUpon>
     </Compile>
@@ -202,9 +206,11 @@
     <Compile Include="ViewModels\Equipment\IEquipmentDetailViewModel.cs" />
     <Compile Include="ViewModels\Equipment\IEquipmentListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Main\IUserCheckLoginViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserCreateViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserUpdateAdminViewModel.cs" />
     <Compile Include="ViewModels\Main\IUserUpdateViewModel.cs" />
+    <Compile Include="ViewModels\Main\UserCheckLoginViewModel.cs" />
     <Compile Include="ViewModels\Main\UserCreateViewModel.cs" />
     <Compile Include="ViewModels\Main\UserUpdateAdminViewModel.cs" />
     <Compile Include="ViewModels\Main\UserUpdateViewModel.cs" />
@@ -261,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Equipment\ListEquipmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Main\CheckUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

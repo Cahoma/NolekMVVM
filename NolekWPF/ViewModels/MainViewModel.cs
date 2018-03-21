@@ -42,6 +42,7 @@ namespace NolekWPF.ViewModels
         public IUserCreateViewModel UserCreateViewModel { get; }
         public IUserUpdateViewModel UserUpdateViewModel { get; }
         public IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
+        public IUserCheckLoginViewModel UserCheckLoginViewModel { get; }
 
         private IUserLookupDataService _userLookupDataService;
         private IUserDataService _userDataService;
@@ -56,7 +57,7 @@ namespace NolekWPF.ViewModels
             IUserLookupDataService userLookupDataService, IEventAggregator eventAggregator, IUserDataService userDataService,
             IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel,
             IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel, IUserCreateViewModel userCreateViewModel, 
-            IUserUpdateViewModel userUpdateViewModel, IUserUpdateAdminViewModel userUpdateAdminViewModel)
+            IUserUpdateViewModel userUpdateViewModel, IUserUpdateAdminViewModel userUpdateAdminViewModel, IUserCheckLoginViewModel userCheckLoginViewModel)
         {
             EquipmentListViewModel = equipmentListViewModel;
             EquipmentCreateViewModel = equipmentCreateViewModel;
@@ -71,6 +72,8 @@ namespace NolekWPF.ViewModels
             UserCreateViewModel = userCreateViewModel;
             UserUpdateViewModel = userUpdateViewModel;
             UserUpdateAdminViewModel = userUpdateAdminViewModel;
+            UserCheckLoginViewModel = userCheckLoginViewModel;
+
             _eventAggregator = eventAggregator;
 
             _userLookupDataService = userLookupDataService;
