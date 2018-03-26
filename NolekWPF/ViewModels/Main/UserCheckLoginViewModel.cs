@@ -25,21 +25,23 @@ namespace NolekWPF.ViewModels.Main
         public Login CurrentUser { get; set; }
         public bool Authenticated { get; set; }
 
-        public IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
+        public IUserCreateViewModel UserCreateViewModel { get; }
 
         public UserCheckLoginViewModel(IUserRepository userRepository, IErrorDataService errorDataService, IUserLookupDataService userLookupDataService,
-            IEventAggregator eventAggregator, IUserUpdateAdminViewModel userUpdateAdminViewModel
+            IEventAggregator eventAggregator, IUserCreateViewModel userCreateViewModel
             )
         {
             CheckLoginCommand = new DelegateCommand(OnCheckUserExecute);
 
-            UserUpdateAdminViewModel = userUpdateAdminViewModel;
+            UserCreateViewModel = userCreateViewModel;
 
             _errorDataService = errorDataService;
             _userRepository = userRepository;
 
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
+
+            Username = "UserAdmin";
         }
 
         private void OnCheckUserExecute()

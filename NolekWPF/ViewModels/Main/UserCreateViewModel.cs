@@ -61,6 +61,14 @@ namespace NolekWPF.ViewModels.Main
             _eventAggregator.GetEvent<AfterUserUpdated>().Subscribe(RefreshList);
 
             NewUser = CreateNewUser();
+
+            _eventAggregator.GetEvent<UserCheck>().Subscribe(OnUserCheck);
+        }
+
+        public async void OnUserCheck()
+        {
+            await LoadAsync();
+            await LoadRolesAsync();
         }
 
         private Login CreateNewUser() //calls the add method in the repository to insert new equipment and return it

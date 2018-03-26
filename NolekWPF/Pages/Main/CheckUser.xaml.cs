@@ -34,7 +34,7 @@ namespace NolekWPF.Pages.Main
         {
             if (_viewmodel.Authenticated == true)
             {
-                this.NavigationService.Navigate(new UpdateUserAdmin(_viewmodel.UserUpdateAdminViewModel));
+                this.NavigationService.Navigate(new CreateUser(_viewmodel.UserCreateViewModel));
             }
         }
     }

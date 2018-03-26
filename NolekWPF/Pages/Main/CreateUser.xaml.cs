@@ -33,7 +33,7 @@ namespace NolekWPF.Pages.Main
         {
             if (_viewmodel.CurrentUser.RoleId == 3)
             {
-                this.NavigationService.Navigate(new UpdateUserAdmin(_viewmodel.UserUpdateAdminViewModel));
+                //this.NavigationService.Navigate(new UpdateUserAdmin(_viewmodel.UserUpdateAdminViewModel));
             }
         }
 

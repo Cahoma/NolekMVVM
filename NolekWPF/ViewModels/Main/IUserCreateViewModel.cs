@@ -19,6 +19,6 @@ namespace NolekWPF.ViewModels.Main
         Task LoadAsync();
         Task LoadRolesAsync();
 
-        IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
+        //IUserCreateViewModel UserCreateViewModel { get; }
     }
 }

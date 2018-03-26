@@ -11,6 +11,6 @@ namespace NolekWPF.ViewModels.Main
     {
         ICommand CheckLoginCommand { get; }
         bool Authenticated { get; }
-        IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
+        IUserCreateViewModel UserCreateViewModel { get; }
     }
 }
