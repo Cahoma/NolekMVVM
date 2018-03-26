@@ -40,8 +40,14 @@ namespace NolekWPF.ViewModels.Main
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
             _eventAggregator.GetEvent<OpenUserUpdateAdminViewEvent>()
                 .Subscribe(OnOpenUserUpdateAdminView);
-            
+            //_eventAggregator.GetEvent<UserCheck>().Subscribe(OnUserCheck);
+           
+        }
 
+        public async void OnUserCheck(int loginId)
+        {
+            await LoadAsync(loginId);
+            await LoadRolesAsync();
         }
 
         private async void OnOpenUserUpdateAdminView(int loginId)

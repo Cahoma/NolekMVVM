@@ -57,6 +57,7 @@ namespace NolekWPF.Startup
             builder.RegisterType<ComponentListViewModel>().As<IComponentListViewModel>();
             builder.RegisterType<ComponentCreateViewModel>().As<IComponentCreateViewModel>();
             builder.RegisterType<ComponentDetailViewModel>().As<IComponentDetailViewModel>();
+            builder.RegisterType<ComponentGeneralViewModel>().As<IComponentGeneralViewModel>();
 
             //Customer
             builder.RegisterType<CustomerCreateViewModel>().As<ICustomerCreateViewModel>();

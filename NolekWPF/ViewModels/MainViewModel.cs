@@ -43,6 +43,7 @@ namespace NolekWPF.ViewModels
         public IUserUpdateViewModel UserUpdateViewModel { get; }
         public IUserUpdateAdminViewModel UserUpdateAdminViewModel { get; }
         public IUserCheckLoginViewModel UserCheckLoginViewModel { get; }
+        public IComponentGeneralViewModel ComponentGeneralViewModel { get; }
 
         private IUserLookupDataService _userLookupDataService;
         private IUserDataService _userDataService;
@@ -57,7 +58,8 @@ namespace NolekWPF.ViewModels
             IUserLookupDataService userLookupDataService, IEventAggregator eventAggregator, IUserDataService userDataService,
             IAddRemoveComponentViewModel addRemoveComponentViewModel, ICustomerCreateViewModel customerCreateViewModel, ICustomerListViewModel customerListViewModel,
             IAddRemoveEquipmentToFromCustomerViewModel addRemoveEquipmentToFromCustomerViewModel, IUserCreateViewModel userCreateViewModel, 
-            IUserUpdateViewModel userUpdateViewModel, IUserUpdateAdminViewModel userUpdateAdminViewModel, IUserCheckLoginViewModel userCheckLoginViewModel)
+            IUserUpdateViewModel userUpdateViewModel, IUserUpdateAdminViewModel userUpdateAdminViewModel, IUserCheckLoginViewModel userCheckLoginViewModel, 
+            IComponentGeneralViewModel componentGeneralViewModel)
         {
             EquipmentListViewModel = equipmentListViewModel;
             EquipmentCreateViewModel = equipmentCreateViewModel;
@@ -73,6 +75,7 @@ namespace NolekWPF.ViewModels
             UserUpdateViewModel = userUpdateViewModel;
             UserUpdateAdminViewModel = userUpdateAdminViewModel;
             UserCheckLoginViewModel = userCheckLoginViewModel;
+            ComponentGeneralViewModel = componentGeneralViewModel;
 
             _eventAggregator = eventAggregator;
 
@@ -109,7 +112,9 @@ namespace NolekWPF.ViewModels
             await UserCreateViewModel.LoadRolesAsync();
 
             await ComponentListViewModel.LoadComponentChoiceAsync();
+            await ComponentGeneralViewModel.LoadComponentChoiceAsync();
             await UserUpdateAdminViewModel.LoadRolesAsync();
+            await ComponentGeneralViewModel.LoadAsync();
         }
 
         public class HarvestPasswordEventArgs : EventArgs

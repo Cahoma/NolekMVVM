@@ -1,22 +1,26 @@
 ﻿using NolekWPF.Data.DataServices;
+using NolekWPF.Data.Repositories;
+using NolekWPF.Events;
+using NolekWPF.Model;
+using NolekWPF.Model.Dto;
+using NolekWPF.Wrappers;
+using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NolekWPF.Model;
-using System.Collections.ObjectModel;
-using Prism.Events;
-using NolekWPF.Events;
 using System.Windows;
-using NolekWPF.Model.Dto;
-using System.ComponentModel;
 using System.Windows.Data;
-using NolekWPF.Data.Repositories;
+using System.Windows.Input;
 
 namespace NolekWPF.ViewModels.Component
 {
-    public class ComponentListViewModel : ViewModelBase, IComponentListViewModel
+    public class ComponentGeneralViewModel : ViewModelBase, IComponentGeneralViewModel
     {
         public ICollectionView ComponentView { get; private set; }
         public ObservableCollection<ComponentDto> Components { get; }
@@ -27,31 +31,135 @@ namespace NolekWPF.ViewModels.Component
         private IEventAggregator _eventAggregator;
         private IErrorDataService _errorDataService;
 
-        public IComponentDetailViewModel ComponentDetailViewModel { get; }
+        private bool _hasChanges;
 
         public Login CurrentUser { get; set; }
 
-        public ComponentListViewModel(IComponentDataService componentDataService,
+        public IComponentListViewModel ComponentListViewModel { get; }
+
+        public ICommand CreateComponentCommand { get; }
+        public ICommand UpdateComponentCommand { get; }
+        public ICommand FullListCommand { get; }
+
+        public ComponentGeneralViewModel(IComponentDataService componentDataService,
             IEventAggregator eventAggregator, IErrorDataService errorDataService, IComponentDetailViewModel componentDetailViewModel,
-            IComponentRepository componentRepository)
+            IComponentRepository componentRepository, IComponentListViewModel componentListViewModel)
         {
+            CreateComponentCommand = new DelegateCommand(OnCreateComponentExecute, OnComponentCreateCanExecute);
+            UpdateComponentCommand = new DelegateCommand(OnUpdateExecute);
+            FullListCommand = new DelegateCommand(OnFullListExecute);
+
             _componentDataService = componentDataService;
             _componentRepository = componentRepository;
+            ComponentListViewModel = componentListViewModel;
             Components = new ObservableCollection<ComponentDto>();
             //initialize event aggregator
             _eventAggregator = eventAggregator;
             _errorDataService = errorDataService;
             _eventAggregator.GetEvent<AfterComponentCreated>().Subscribe(RefreshList);
-            ComponentDetailViewModel = componentDetailViewModel;
+
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
-            _eventAggregator.GetEvent<OpenFullListEvent>().Subscribe(OnFullListOpen);
             //_eventAggregator.GetEvent<OpenComponentListViewEvent>().Subscribe(RefreshList);
+
+            Component = CreateNewComponent();
         }
 
-        public async void OnFullListOpen()
+        public void OnFullListExecute()
         {
-            await LoadAsync();
-            await LoadComponentChoiceAsync();
+            _eventAggregator.GetEvent<OpenFullListEvent>().Publish();
+        }
+
+        public async void OnUpdateExecute()
+        {
+            try
+            {
+                await _componentRepository.SaveAsync();
+                Component = UpdateComponent();
+                RefreshList();
+                Component = null;
+                //_eventAggregator.GetEvent<OpenComponentListViewEvent>().Publish();
+            }
+            catch (Exception e)
+            {
+                Error error = new Error
+                {
+                    ErrorMessage = e.Message,
+                    ErrorTimeStamp = DateTime.Now,
+                    ErrorStackTrace = e.StackTrace,
+                    LoginId = CurrentUser.LoginId
+                };
+                await _errorDataService.AddError(error);
+            }
+        }
+
+        public ComponentWrapper UpdateComponent()
+        {
+            var component = new ComponentWrapper(new Model.Component());
+
+            //_eventAggregator.GetEvent<AfterComponentCreated>().Publish();
+            return component;
+        }
+
+        private bool OnComponentCreateCanExecute()
+        {
+            //validate fields to disable/enable buton
+            return Component != null && !Component.HasErrors;
+        }
+
+        private async void OnCreateComponentExecute()
+        {
+            try
+            {
+                await _componentRepository.SaveAsync();
+                Component = CreateNewComponent();
+                MessageBox.Show("Component was successfully created.");
+                RefreshList();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        MessageBox.Show(validationError.PropertyName + validationError.ErrorMessage + dbEx.Message);
+                    }
+                }
+            }
+        }
+
+        public bool HasChanges //is true if changes has been made to equipment
+        {
+            get { return _hasChanges; }
+            set
+            {
+                if (_hasChanges != value)
+                {
+                    _hasChanges = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ComponentWrapper CreateNewComponent() //calls the add method in the repository to insert new equipment and return it
+        {
+            var component = new ComponentWrapper(new Model.Component());
+            //if(SelectedComponent != null)
+            //{
+            //    component = _componentRepository.GetByIdAsync(_selectedComponent.ComponentId);
+            //}
+
+            component.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(Component.HasErrors))
+                {
+                    ((DelegateCommand)CreateComponentCommand).RaiseCanExecuteChanged();
+                }
+            };
+            ((DelegateCommand)CreateComponentCommand).RaiseCanExecuteChanged();
+
+
+            _componentRepository.Add(component.Model); //context is aware of the equipment to add
+            return component;
         }
 
         public async Task LoadComponentChoiceAsync()
@@ -64,7 +172,7 @@ namespace NolekWPF.ViewModels.Component
         {
             CurrentUser = user;
         }
-             
+
 
         private void FilterCollection()
         {
@@ -84,7 +192,7 @@ namespace NolekWPF.ViewModels.Component
                 {
                     string allcaps = _filterString.ToUpper();
 
-                    if(ComponentChosen.ComponentLookupId == 1) //search for type
+                    if (ComponentChosen.ComponentLookupId == 1) //search for type
                     {
                         return data.ComponentType.Contains(_filterString) || data.ComponentType.Contains(allcaps);
                     }
@@ -99,7 +207,7 @@ namespace NolekWPF.ViewModels.Component
                     else if (ComponentChosen.ComponentLookupId == 4) //search for supply
                     {
                         return data.ComponentSupplyNumber.Contains(_filterString) || data.ComponentSupplyNumber.Contains(allcaps);
-                    }                  
+                    }
                 }
                 return true;
             }
@@ -166,13 +274,30 @@ namespace NolekWPF.ViewModels.Component
             set
             {
                 _selectedComponent = value;
+                OnPropertyChanged();
                 if (_selectedComponent != null)
                 {
-                    _eventAggregator.GetEvent<OpenComponentDetailViewEvent>()
-                        .Publish(_selectedComponent.ComponentId);
+                    Component.ComponentType = SelectedComponent.ComponentType;
+                    Component.ComponentSupplyNumber = SelectedComponent.ComponentSupplyNumber;
+                    Component.ComponentSerialNumber = SelectedComponent.ComponentSerialNumber;
+                    Component.ComponentOrderNumber = SelectedComponent.ComponentOrderNumber;
+                    Component.ComponentDescription = SelectedComponent.ComponentDescription;
+                    Component.ComponentId = SelectedComponent.ComponentId;
                 }
             }
         }
+
+        private ComponentWrapper _component;
+        public ComponentWrapper Component
+        {
+            get { return _component; }
+            set
+            {
+                _component = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _filterString;
         public string FilterString
@@ -184,7 +309,5 @@ namespace NolekWPF.ViewModels.Component
                 FilterCollection();
             }
         }
-
-
     }
 }

@@ -1,0 +1,132 @@
+﻿<Page x:Class="NolekWPF.Pages.Component.GeneralComponentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NolekWPF.Pages.Component"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="1000"
+      Title="GeneralComponentPage">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical">
+            <Label Content="Component List"
+           FontSize="20"></Label>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="200" Name="SearchBar" Margin="10 0 0 5" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox   
+                Name="cmComp"
+                MinWidth="150"
+                Margin="12 0 0 12"
+                ItemsSource="{Binding SelectedComponentLookup}"
+                DisplayMemberPath="ComponentChoice"
+                SelectedValuePath="ComponentChoice"
+                SelectedItem="{Binding ComponentChosen}">
+                </ComboBox>
+                <TextBlock Text="Search by..." IsHitTestVisible="False" Margin="-145 0 0 0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=cmComp,Path=SelectedItem}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+            <DataGrid Width="auto"
+              ItemsSource="{Binding Components}"
+              SelectedItem="{Binding SelectedComponent, Mode=TwoWay}"
+              IsReadOnly="True"
+              CanUserReorderColumns="False"
+              SelectionMode="Single"
+              ColumnWidth="auto"
+                  AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type Name" Binding="{Binding ComponentType}"/>
+                    <DataGridTextColumn Header="Serial Number" Binding="{Binding ComponentSerialNumber}"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding ComponentDescription}"/>
+                </DataGrid.Columns>
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick"
+                       Handler="Row_DoubleClick" />
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+            </DataGrid>
+            <Button Width='100'
+              Height="25"
+              Content='See full list'
+              Command="{Binding FullListCommand}"
+              Margin="50 12 0 0"
+              Click='btnFullList_Click' />
+        </StackPanel>
+        
+        <StackPanel Orientation="Vertical">
+            <Label Content="Create New Component"
+           FontSize="20"></Label>
+        <StackPanel Orientation="Horizontal"
+                Margin="0 0 0 12">
+            <Label Width="125">Type*:</Label>
+            <TextBox x:Name='txtName'
+               Width='150'
+               Padding="2"
+               Text="{Binding Component.ComponentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="
+               Horizontal"
+                Margin="0 0 0 12">
+            <Label Width="125">Description:</Label>
+            <TextBox x:Name='txtDescription'
+               TextWrapping="Wrap"
+               Height="50"
+               Width='150'
+               Padding="2"
+               Text="{Binding Component.ComponentDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="
+               Horizontal"
+                Margin="0 0 0 12">
+            <Label Width="125">Order No:</Label>
+            <TextBox x:Name='txtOrderNo'
+               Width='150'
+               Padding="2"
+               Text="{Binding Component.ComponentOrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="
+               Horizontal"
+                Margin="0 0 0 12">
+            <Label Width="125">Serial No*:</Label>
+            <TextBox x:Name='txtSerialNo'
+               Width='150'
+               Padding="2"
+               Text="{Binding Component.ComponentSerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel Orientation="
+               Horizontal"
+                Margin="0 0 0 12">
+            <Label Width="125">Supply No*:</Label>
+            <TextBox x:Name='txtSupplyNo'
+               Width='150'
+               Padding="2"
+               Text="{Binding Component.ComponentSupplyNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Width='100'
+              Height="25"
+              Content='Create'
+              Command='{Binding CreateComponentCommand}'
+              Click='Button_Click_1' />
+            <Button Width='100'
+              Height="25"
+              Content='Update'
+              Command='{Binding UpdateComponentCommand}'
+              Margin="100 0 0 0"
+              Click='Button_Click' />
+        </StackPanel>
+            
+    </StackPanel>
+    </StackPanel>
+</Page>

@@ -128,6 +128,7 @@
     <Compile Include="Data\Repositories\UserRepository.cs" />
     <Compile Include="Events\AfterCustomerCreated.cs" />
     <Compile Include="Events\AfterEquipmentCreated.cs" />
+    <Compile Include="Events\AfterUserCheckEvent.cs" />
     <Compile Include="Events\AfterUserLogin.cs" />
     <Compile Include="Events\AfterUserUpdated.cs" />
     <Compile Include="Events\OpenComponentDetailViewEvent.cs" />
@@ -135,12 +136,16 @@
     <Compile Include="Events\OpenCustomerDetailViewEvent.cs" />
     <Compile Include="Events\OpenEquipmentDetailViewEvent.cs" />
     <Compile Include="Events\AfterComponentCreated.cs" />
+    <Compile Include="Events\OpenFullListEvent.cs" />
     <Compile Include="Events\OpenUserUpdateAdminViewEvent.cs" />
     <Compile Include="Events\UserCheck.cs" />
     <Compile Include="Helpers\AccessLevelToVisibilityConverter.cs" />
     <Compile Include="Helpers\BoolToVisibleOrCollapsed.cs" />
     <Compile Include="Helpers\ConvertTextToImage.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Pages\Component\GeneralComponentPage.xaml.cs">
+      <DependentUpon>GeneralComponentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Equipment\AddRemoveComponentPage.xaml.cs">
       <DependentUpon>AddRemoveComponentPage.xaml</DependentUpon>
     </Compile>
@@ -186,9 +191,11 @@
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModels\Component\ComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentDetailViewModel.cs" />
+    <Compile Include="ViewModels\Component\ComponentGeneralViewModel.cs" />
     <Compile Include="ViewModels\Component\ComponentListViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentCreateViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentDetailViewModel.cs" />
+    <Compile Include="ViewModels\Component\IComponentGeneralViewModel.cs" />
     <Compile Include="ViewModels\Component\IComponentListViewModel.cs" />
     <Compile Include="ViewModels\Customers\AddRemoveEquipmentToFromCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CustomerCreateViewModel.cs" />
@@ -230,6 +237,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Component\GeneralComponentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Equipment\AddRemoveComponentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
