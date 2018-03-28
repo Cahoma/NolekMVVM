@@ -8,11 +8,11 @@
       d:DesignHeight="300" d:DesignWidth="1000"
       Title="GeneralComponentPage">
     <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Vertical">
-            <Label Content="Component List"
+        <StackPanel Orientation="Vertical" Width="334">
+            <Label Content="Components List"
            FontSize="20"></Label>
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="200" Name="SearchBar" Margin="10 0 0 5" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Width="150" Name="SearchBar" Margin="10 0 0 5" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"/>
                 <ComboBox   
                 Name="cmComp"
                 MinWidth="150"
@@ -22,6 +22,7 @@
                 SelectedValuePath="ComponentChoice"
                 SelectedItem="{Binding ComponentChosen}">
                 </ComboBox>
+                <ComboBoxItem ></ComboBoxItem>
                 <TextBlock Text="Search by..." IsHitTestVisible="False" Margin="-145 0 0 0">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
@@ -118,6 +119,7 @@
               Height="25"
               Content='Create'
               Command='{Binding CreateComponentCommand}'
+              Margin="10 0 0 0"
               Click='Button_Click_1' />
             <Button Width='100'
               Height="25"

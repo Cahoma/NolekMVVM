@@ -260,7 +260,7 @@ namespace NolekWPF.ViewModels.Component
         private IEnumerable<ComponentLookupDto> _selectedComponentLookup;
         public IEnumerable<ComponentLookupDto> SelectedComponentLookup
         {
-            get { return _selectedComponentLookup; }
+            get { return _selectedComponentLookup.Where(c => c.ComponentChoice != "ComponentOrderNumber"); ; }
             set
             {
                 _selectedComponentLookup = value;

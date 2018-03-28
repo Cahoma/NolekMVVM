@@ -36,6 +36,12 @@ namespace NolekWPF.ViewModels.Main
             _eventAggregator = eventAggregator;
 
             _eventAggregator.GetEvent<AfterUserLogin>().Subscribe(OnLogin);
+            _eventAggregator.GetEvent<UserCheck>().Subscribe(OnUserCheck);
+        }
+
+        public async void OnUserCheck()
+        {
+            await LoadAsync(CurrentUser.LoginId);
         }
 
 

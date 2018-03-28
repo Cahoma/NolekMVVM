@@ -18,8 +18,8 @@
                 <MenuItem Header="User">
                     <MenuItem Header="_Log out" Click="mnuLogout_Click" Command="{Binding LogoutCommand}"></MenuItem>
                     <MenuItem x:Name="mnuExit" Header="_Exit" Click="mnuExit_Click"></MenuItem>
-                    <MenuItem x:Name="mnuNewUser" Header="_New User" Click="mnuNewUser_Click"></MenuItem>
-                    <MenuItem x:Name="mnuUpdUser" Header="_Change User info" Click="mnuUpdUser_Click"></MenuItem>
+                    <MenuItem x:Name="mnuNewUser" Header="_New User" Click="mnuNewUser_Click" Command="{Binding DirectionCommandAdmin}"></MenuItem>
+                    <MenuItem x:Name="mnuUpdUser" Header="_Change User info" Click="mnuUpdUser_Click" Command="{Binding DirectionCommandUser}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Equipment">
                     <MenuItem x:Name="mnuEquipList" Header="_List / Update" Click="mnuEquipList_Click"></MenuItem>
@@ -72,7 +72,7 @@
                 <TextBlock Text="Password" Grid.Row="2" Margin="3"/>
                 <PasswordBox x:Name="txtPassword"  Grid.Column="1" Grid.Row="2" Margin="3" MinWidth="100" HorizontalAlignment="Left" 
                      helpers:PasswordHelper.Attach="True" helpers:PasswordHelper.Password="{Binding Text, ElementName=txtPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Command="{Binding LoginCommand}" Content="Log in" Grid.Row="3" Grid.Column="1" Margin="3" FontSize="14" Click="Click"/>
+                <Button Command="{Binding LoginCommand}" Content="Log in" Grid.Row="3" Grid.Column="1" Margin="3" FontSize="14" Click="Click" IsDefault="True"/>
             </Grid>
         </Grid>
     </StackPanel>

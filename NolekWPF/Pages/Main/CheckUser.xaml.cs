@@ -32,9 +32,13 @@ namespace NolekWPF.Pages.Main
 
         private void Click(object sender, RoutedEventArgs e)
         {
-            if (_viewmodel.Authenticated == true)
+            if (_viewmodel.Authenticated == true && _viewmodel.Direction == "Admin")
             {
                 this.NavigationService.Navigate(new CreateUser(_viewmodel.UserCreateViewModel));
+            }
+            else if (_viewmodel.Authenticated == true && _viewmodel.Direction == "User")
+            {
+                this.NavigationService.Navigate(new UpdateUser(_viewmodel.UserUpdateViewModel));
             }
         }
     }

@@ -87,6 +87,9 @@ namespace NolekWPF.ViewModels
 
             LoginCommand = new DelegateCommand(Login);
             LogoutCommand = new DelegateCommand(Logout);
+
+            DirectionCommandAdmin = new DelegateCommand(DirectionAdmin);
+            DirectionCommandUser = new DelegateCommand(DirectionUser);
         }
 
         public async Task LoadAsync() //method must be async when loading in async data and return a task
@@ -115,6 +118,18 @@ namespace NolekWPF.ViewModels
             await ComponentGeneralViewModel.LoadComponentChoiceAsync();
             await UserUpdateAdminViewModel.LoadRolesAsync();
             await ComponentGeneralViewModel.LoadAsync();
+        }
+
+        public void DirectionAdmin()
+        {
+            Direction = "Admin";
+            _eventAggregator.GetEvent<DirectionUserEvent>().Publish(Direction);
+        }
+
+        public void DirectionUser()
+        {
+            Direction = "User";
+            _eventAggregator.GetEvent<DirectionUserEvent>().Publish(Direction);
         }
 
         public class HarvestPasswordEventArgs : EventArgs
@@ -203,8 +218,21 @@ namespace NolekWPF.ViewModels
             }
         }
 
+        private string _direction;
+        public string Direction
+        {
+            get { return _direction; }
+            set
+            {
+                _direction = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand LoginCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand DirectionCommandAdmin { get; }
+        public ICommand DirectionCommandUser { get; }
 
         public void Logout()
         {

@@ -10,7 +10,7 @@
 
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
-            <Label Content="Create New User"
+            <Label Content="Update User"
            FontSize="20">
             </Label>
         </StackPanel>

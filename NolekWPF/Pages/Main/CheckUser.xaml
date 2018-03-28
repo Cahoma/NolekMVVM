@@ -28,7 +28,7 @@
             <TextBlock Text="Password" Grid.Row="2" Margin="3"/>
             <TextBox x:Name="txtPassword"  Grid.Column="1" Grid.Row="2" Margin="3" MinWidth="100" HorizontalAlignment="Left"
                     Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Command="{Binding CheckLoginCommand}" Content="Log in" Grid.Row="3" Grid.Column="1" Margin="3" FontSize="14" Click="Click"/>
+            <Button Command="{Binding CheckLoginCommand}" Content="Log in" Grid.Row="3" Grid.Column="1" Margin="3" FontSize="14" Click="Click" IsDefault="True"/>
         </Grid>
     </Grid>
 </Page>
